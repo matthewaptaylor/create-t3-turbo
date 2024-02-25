@@ -1,6 +1,8 @@
 import cors from "@fastify/cors";
 import fastify from "fastify";
 
+import { initDb } from "@acme/api";
+
 import { setupFastifyTrpc } from "./trpc";
 
 /**
@@ -12,6 +14,7 @@ const bootstrap = async () => {
   });
 
   // Register plugins and middlewares
+  initDb().catch(console.error);
   await setupFastifyTrpc(server);
 
   await server.register(cors);
