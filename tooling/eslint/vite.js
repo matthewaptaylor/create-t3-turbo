@@ -1,8 +1,11 @@
 /** @type {import('eslint').Linter.Config} */
 const config = {
-  extends: ["plugin:@next/next/core-web-vitals"],
+  plugins: ["react-refresh"],
   rules: {
-    "@next/next/no-html-link-for-pages": "off",
+    "react-refresh/only-export-components": [
+      "warn",
+      { allowConstantExport: true },
+    ],
     "@typescript-eslint/require-await": "off",
   },
 };
