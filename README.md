@@ -1,28 +1,8 @@
 # create-t3-turbo
 
-> **Note**
-> Due to high demand, this repo now uses the `app` directory with some new experimental features. If you want to use the more traditional `pages` router, [check out the repo before the update](https://github.com/t3-oss/create-t3-turbo/tree/414aff131ca124573e721f3779df3edb64989fd4).
-
-> **Note**
-> OAuth deployments are now working for preview deployments. Read [deployment guide](https://github.com/t3-oss/create-t3-turbo#auth-proxy) and [check out the source](./apps/auth-proxy) to learn more!
-
-## Installation
-
-There are two ways of initializing an app using the `create-t3-turbo` starter. You can either use this repository as a template:
-
-![use-as-template](https://github.com/t3-oss/create-t3-turbo/assets/51714798/bb6c2e5d-d8b6-416e-aeb3-b3e50e2ca994)
-
-or use Turbo's CLI to init your project (use PNPM as package manager):
-
-```bash
-npx create-turbo@latest -e https://github.com/t3-oss/create-t3-turbo
-```
-
 ## About
 
-Ever wondered how to migrate your T3 application into a monorepo? Stop right here! This is the perfect starter repo to get you running with the perfect stack!
-
-It uses [Turborepo](https://turborepo.org) and contains:
+This is a full-stack monorepo, using [Turborepo](https://turborepo.org) and contains:
 
 ```text
 .github
@@ -51,7 +31,7 @@ packages
   ├─ auth
   |   └─ Authentication using next-auth. **NOTE: Only for Next.js app, not Expo**
   ├─ db
-  |   └─ Typesafe db calls using Drizzle & Planetscale
+  |   └─ Typesafe db calls using Prisma
   └─ ui
       └─ Start of a UI package for the webapp using shadcn-ui
 tooling
@@ -65,12 +45,9 @@ tooling
       └─ shared tsconfig you can extend from
 ```
 
-> In this template, we use `@acme` as a placeholder for package names. As a user, you might want to replace it with your own organization or project name. You can use find-and-replace to change all the instances of `@acme` to something like `@my-company` or `@project-name`.
+> In this template, we use `@acme` as a placeholder for package names. As a user, you might want to replace it with your own organization or project name. You can use find-and-replace to change all the instances of `@acme` to something like `@my-company` or `@project-name`, and the same for `acme`.
 
 ## Quick Start
-
-> **Note**
-> The [db](./packages/db) package is preconfigured to use PlanetScale and is **edge-bound** with the [database.js](https://github.com/planetscale/database-js) driver. If you're using something else, make the necessary modifications to the [schema](./packages/db/src/schema) as well as the [client](./packages/db/src/index.ts) and the [drizzle config](./packages/db/drizzle.config.ts). If you want to switch to non-edge database driver, remove `export const runtime = "edge";` [from all pages and api routes](https://github.com/t3-oss/create-t3-turbo/issues/634#issuecomment-1730240214).
 
 To get it running, follow the steps below:
 
@@ -81,10 +58,11 @@ To get it running, follow the steps below:
 pnpm i
 
 # Configure environment variables
-# There is an `.env.example` in the root directory you can use for reference
+# There are `.env.example` files you can use for reference
 cp .env.example .env
+cp packages/db/.env.example packages/db/.env
 
-# Push the Drizzle schema to the database
+# Push the Prisma schema to the database
 pnpm db:push
 ```
 
@@ -96,27 +74,17 @@ pnpm db:push
 
    > **NOTE:** If you just installed XCode, or if you have updated it, you need to open the simulator manually once. Run `npx expo start` in the root dir, and then enter `I` to launch Expo Go. After the manual launch, you can run `pnpm dev` in the root directory.
 
-   ```diff
-   +  "dev": "expo start --ios",
-   ```
-
-2. Run `pnpm dev` at the project root folder.
+2. Run `pnpm dev:ios` at the project root folder.
 
 #### Use Android Emulator
 
 1. Install Android Studio tools [as shown on expo docs](https://docs.expo.dev/workflow/android-studio-emulator).
 
-2. Change the `dev` script at `apps/expo/package.json` to open the Android emulator.
-
-   ```diff
-   +  "dev": "expo start --android",
-   ```
-
-3. Run `pnpm dev` at the project root folder.
+2. Run `pnpm dev:android` at the project root folder.
 
 > **TIP:** It might be easier to run each app in separate terminal windows, so you get the logs from each app separately. This is also required if you want your terminals to be interactive, e.g. to access the Expo QR code. You can run `pnpm --filter expo dev` and `pnpm --filter nextjs dev` to run each app in a separate terminal window.
 
-### 3. When it's time to add a new package
+### 3. Adding packages
 
 To add a new package, simply run `pnpm turbo gen init` in the monorepo root. This will prompt you for a package name as well as if you want to install any dependencies to the new package (of course you can also do this yourself later).
 
@@ -170,7 +138,7 @@ The auth proxy is a Nitro server that proxies OAuth requests in preview deployme
 Then, there are some environment variables you need to set in order to get OAuth working:
 
 - For the Next.js app, set `AUTH_REDIRECT_PROXY_URL` to the URL of the auth proxy.
-- For the auth proxy server, set `AUTH_REDIRECT_PROXY_URL` to the same as above, as well as `AUTH_DISCORD_ID`, `AUTH_DISCORD_SECRET` (or the equivalent for your OAuth provider(s)). Lastly, set `AUTH_SECRET` **to the same value as in the Next.js app** for preview environments.
+- For the auth proxy server, set `AUTH_REDIRECT_PROXY_URL` to the same as above, as well as `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` (or the equivalent for your OAuth provider(s)). Lastly, set `AUTH_SECRET` **to the same value as in the Next.js app** for preview environments.
 
 Read more about the setup in [the auth proxy README](./apps/auth-proxy/README.md).
 
