@@ -17,5 +17,6 @@
     "incremental": true,
     "noUncheckedIndexedAccess": true
   },
+  "files": ["reset.d.ts"],
   "exclude": ["node_modules", "build", "dist", ".next", ".expo"]
 }
