@@ -9,7 +9,7 @@
     "build": "turbo build",
     "clean": "git clean -xdf node_modules",
     "clean:workspaces": "turbo clean",
-    "db:start": "./start-database.sh",
+    "services:start": "docker compose --profile services up -d",
     "db:push": "pnpm dlx prisma db push",
     "db:studio": "pnpm dlx prisma db studio",
     "dev": "turbo dev --parallel",
@@ -23,6 +23,7 @@
   },
   "devDependencies": {
     "@acme/prettier-config": "workspace:^0.1.0",
+    "@total-typescript/ts-reset": "^0.5.1",
     "@turbo/gen": "^1.12.4",
     "prettier": "^3.2.5",
     "prisma": "^5.10.2",

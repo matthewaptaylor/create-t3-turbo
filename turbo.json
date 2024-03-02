@@ -16,11 +16,11 @@
         ".vercel/output/**"
       ]
     },
-    "db:start": {
+    "services:start": {
       "cache": false
     },
     "dev": {
-      "dependsOn": ["db:start"],
+      "dependsOn": ["services:start"],
       "persistent": true,
       "cache": false
     },

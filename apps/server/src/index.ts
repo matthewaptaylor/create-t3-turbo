@@ -1,9 +1,11 @@
 import cors from "@fastify/cors";
 import fastify from "fastify";
 
-import { initDb } from "@acme/api";
-
-import { setupFastifyTrpc } from "./trpc";
+import {
+  setupFastifyAuth,
+  setupFastifyAuthErrorHandler,
+} from "./endpoints/auth";
+import { setupFastifyTrpc } from "./endpoints/trpc";
 
 /**
  * Bootstrap the server.
@@ -13,11 +15,13 @@ const bootstrap = async () => {
     maxParamLength: 5000,
   });
 
-  // Register plugins and middlewares
-  initDb().catch(console.error);
-  await setupFastifyTrpc(server);
+  // Register error handlers
+  setupFastifyAuthErrorHandler(server);
 
+  // Register plugins and middlewares
   await server.register(cors);
+  await setupFastifyAuth(server);
+  await setupFastifyTrpc(server);
 
   try {
     await server.listen({ port: 3002 });

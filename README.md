@@ -81,7 +81,12 @@ pnpm db:push
 
 > **TIP:** It might be easier to run each app in separate terminal windows, so you get the logs from each app separately. This is also required if you want your terminals to be interactive, e.g. to access the Expo QR code. You can run `pnpm --filter expo dev` and `pnpm --filter vite dev` to run each app in a separate terminal window.
 
-### 3. Adding packages
+### 3. Running the Development Environment
+
+1. Run `pnpm services:start` at the project root folder to start the database and the SuperTokens server.
+2. Run `pnpm dev` at the project root folder to start the apps.
+
+### 4. Adding packages
 
 To add a new package, simply run `pnpm turbo gen init` in the monorepo root. This will prompt you for a package name as well as if you want to install any dependencies to the new package (of course you can also do this yourself later).
 
