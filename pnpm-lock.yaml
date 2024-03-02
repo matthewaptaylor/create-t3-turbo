@@ -220,6 +220,12 @@ importers:
       '@tanstack/react-query':
         specifier: ^5.22.2
         version: 5.22.2(react@18.2.0)
+      '@tanstack/react-router':
+        specifier: ^1.18.1
+        version: 1.18.1(react-dom@18.2.0)(react@18.2.0)
+      '@tanstack/router-devtools':
+        specifier: ^1.18.1
+        version: 1.18.1(csstype@3.1.3)(react-dom@18.2.0)(react@18.2.0)
       '@trpc/client':
         specifier: 11.0.0-next-beta.294
         version: 11.0.0-next-beta.294(@trpc/server@11.0.0-next-beta.294)
@@ -266,6 +272,9 @@ importers:
       '@acme/tsconfig':
         specifier: workspace:^0.1.0
         version: link:../../tooling/typescript
+      '@tanstack/router-vite-plugin':
+        specifier: ^1.18.1
+        version: 1.18.1
       '@types/node':
         specifier: ^20.11.20
         version: 20.11.20
@@ -3879,6 +3888,11 @@ packages:
       zod: 3.22.4
     dev: false
 
+  /@tanstack/history@1.15.13:
+    resolution: {integrity: sha512-ToaeMtK5S4YaxCywAlYexc7KPFN0esjyTZ4vXzJhXEWAkro9iHgh7m/4ozPJb7oTo65WkHWX0W9GjcZbInSD8w==}
+    engines: {node: '>=12'}
+    dev: false
+
   /@tanstack/query-core@5.22.2:
     resolution: {integrity: sha512-z3PwKFUFACMUqe1eyesCIKg3Jv1mysSrYfrEW5ww5DCDUD4zlpTKBvUDaEjsfZzL3ULrFLDM9yVUxI/fega1Qg==}
     dev: false
@@ -3890,6 +3904,69 @@ packages:
     dependencies:
       '@tanstack/query-core': 5.22.2
       react: 18.2.0
+    dev: false
+
+  /@tanstack/react-router@1.18.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-6Q3Rcg49wyqRzA5l0fln48H2cLxglQuNkxu3b9Oy0zO0VcljfTZorhUhUIqC6HZD2CfFJYfLverrFYxPmCs5JA==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/history': 1.15.13
+      '@tanstack/react-store': 0.2.1(react-dom@18.2.0)(react@18.2.0)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      tiny-invariant: 1.3.3
+      tiny-warning: 1.0.3
+    dev: false
+
+  /@tanstack/react-store@0.2.1(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-tEbMCQjbeVw9KOP/202LfqZMSNAVi6zYkkp1kBom8nFuMx/965Hzes3+6G6b/comCwVxoJU8Gg9IrcF8yRPthw==}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/store': 0.1.3
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+      use-sync-external-store: 1.2.0(react@18.2.0)
+    dev: false
+
+  /@tanstack/router-devtools@1.18.1(csstype@3.1.3)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-2Jg2wA38qU/QcJThhSnOK+GcakoX1yjuE8bLbLbiztHa1PxsY3lOqzJdEXaVdKTyuiUy+JU11B8TLU4SPPZfMQ==}
+    engines: {node: '>=12'}
+    peerDependencies:
+      react: '>=16'
+      react-dom: '>=16'
+    dependencies:
+      '@tanstack/react-router': 1.18.1(react-dom@18.2.0)(react@18.2.0)
+      clsx: 2.1.0
+      date-fns: 2.30.0
+      goober: 2.1.14(csstype@3.1.3)
+      react: 18.2.0
+      react-dom: 18.2.0(react@18.2.0)
+    transitivePeerDependencies:
+      - csstype
+    dev: false
+
+  /@tanstack/router-generator@1.18.1:
+    resolution: {integrity: sha512-7nyeXcSaCnYhOdgY2CpEtQGccDLpo73xmoXL+DNrQiugjuqkoBQ7JGNEXIQQcH8lPra+gU4TeVS1vlRav2F/Dg==}
+    engines: {node: '>=12'}
+    dependencies:
+      prettier: 3.2.5
+      zod: 3.22.4
+    dev: true
+
+  /@tanstack/router-vite-plugin@1.18.1:
+    resolution: {integrity: sha512-gGlU5TbeQZWYERQVmjjTiZxPsrL2Id51YbL5MFQ41HBRmNMRPl4Xom32sc8ZzwADw8YXA9uPcRqRYFBLQDABSA==}
+    engines: {node: '>=12'}
+    dependencies:
+      '@tanstack/router-generator': 1.18.1
+    dev: true
+
+  /@tanstack/store@0.1.3:
+    resolution: {integrity: sha512-GnolmC8Fr4mvsHE1fGQmR3Nm0eBO3KnZjDU0a+P3TeQNM/dDscFGxtA7p31NplQNW3KwBw4t1RVFmz0VeKLxcw==}
     dev: false
 
   /@tootallnate/quickjs-emscripten@0.23.0:
@@ -5642,6 +5719,13 @@ packages:
     engines: {node: '>= 14'}
     dev: true
 
+  /date-fns@2.30.0:
+    resolution: {integrity: sha512-fnULvOpxnC5/Vg3NCiWelDsLiUc9bRwAPs/+LfTLNvetFCtCTN+yQz15C/fs4AwX1R9K5GLtLfn8QW+dWisaAw==}
+    engines: {node: '>=0.11'}
+    dependencies:
+      '@babel/runtime': 7.23.9
+    dev: false
+
   /dayjs@1.11.10:
     resolution: {integrity: sha512-vjAczensTgRcqDERK0SR2XMwsF/tSvnvlv6VcF2GIhg6Sx4yOIt/irsr1RDJsKiIyBzJDpCoXiWWq28MqH2cnQ==}
     dev: false
@@ -7201,6 +7285,14 @@ packages:
       ignore: 5.3.1
       merge2: 1.4.1
       slash: 3.0.0
+
+  /goober@2.1.14(csstype@3.1.3):
+    resolution: {integrity: sha512-4UpC0NdGyAFqLNPnhCT2iHpza2q+RAY3GV85a/mRPdzyPQMsj0KmMMuetdIkzWRbJ+Hgau1EZztq8ImmiMGhsg==}
+    peerDependencies:
+      csstype: ^3.0.10
+    dependencies:
+      csstype: 3.1.3
+    dev: false
 
   /gopd@1.0.1:
     resolution: {integrity: sha512-d65bNlIadxvpb/A2abVdlqKqV563juRnZ1Wtk6s1sIR8uNsXR70xqIzVqxVf1eTqDunwT2MkczEeaezCKTZhwA==}
@@ -11525,6 +11617,14 @@ packages:
   /through@2.3.8:
     resolution: {integrity: sha512-w89qg7PI8wAdvX60bMDP+bFoD5Dvhm9oLheFp5O4a2QF0cSBGsBX4qZmadPMvVqlLJBBci+WqGGOAPvcDeNSVg==}
 
+  /tiny-invariant@1.3.3:
+    resolution: {integrity: sha512-+FbBPE1o9QAYvviau/qC5SE3caw21q3xkvWKBtja5vgqOWIHHJ3ioaq1VPfn/Szqctz2bU/oYeKd9/z5BL+PVg==}
+    dev: false
+
+  /tiny-warning@1.0.3:
+    resolution: {integrity: sha512-lBN9zLN/oAf68o3zNXYrdCt1kP8WsiGW8Oo2ka41b2IM5JL/S1CTyX1rW0mb/zSuJun0ZUrDxx4sqvYS2FWzPA==}
+    dev: false
+
   /tinycolor2@1.6.0:
     resolution: {integrity: sha512-XPaBkWQJdsf3pLKJV9p4qN/S+fm2Oj8AIPo1BTUhg5oxkvm9+SVEGFdhyOz7tTdUTfvxMiAs4sp6/eZO2Ew+pw==}
     dev: true
@@ -12008,6 +12108,14 @@ packages:
       react: 18.2.0
     dev: false
 
+  /use-sync-external-store@1.2.0(react@18.2.0):
+    resolution: {integrity: sha512-eEgnFxGQ1Ife9bzYs6VLi8/4X6CObHMw9Qr9tPY43iKwsPw8xE8+EFsf/2cFZ5S3esXgpWgtSCtLNS41F+sKPA==}
+    peerDependencies:
+      react: ^16.8.0 || ^17.0.0 || ^18.0.0
+    dependencies:
+      react: 18.2.0
+    dev: false
+
   /util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
 
@@ -12483,4 +12591,3 @@ packages:
 
   /zod@3.22.4:
     resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
-    dev: false
