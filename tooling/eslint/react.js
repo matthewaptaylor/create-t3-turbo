@@ -7,6 +7,7 @@ const config = {
   ],
   rules: {
     "react/prop-types": "off",
+    "react/no-children-prop": "off",
   },
   globals: {
     React: "writable",

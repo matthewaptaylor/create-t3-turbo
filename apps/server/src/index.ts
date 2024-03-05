@@ -2,10 +2,12 @@ import cors from "@fastify/cors";
 import fastify from "fastify";
 
 import {
+  getAuthCorsHeaders,
   setupFastifyAuth,
   setupFastifyAuthErrorHandler,
 } from "./endpoints/auth";
 import { setupFastifyTrpc } from "./endpoints/trpc";
+import { env } from "./env";
 
 /**
  * Bootstrap the server.
@@ -19,9 +21,13 @@ const bootstrap = async () => {
   setupFastifyAuthErrorHandler(server);
 
   // Register plugins and middlewares
-  await server.register(cors);
   await setupFastifyAuth(server);
   await setupFastifyTrpc(server);
+  await server.register(cors, {
+    origin: env.WEBSITE_URI,
+    credentials: true,
+    allowedHeaders: ["Content-Type", ...getAuthCorsHeaders()],
+  });
 
   try {
     await server.listen({ port: 3002 });

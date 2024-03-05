@@ -9,7 +9,7 @@ export const Route = createRootRoute({
         <Link to="/" className="[&.active]:font-bold">
           Home
         </Link>{" "}
-        <Link to="/signin" className="[&.active]:font-bold">
+        <Link to="/auth/sign-in" className="[&.active]:font-bold">
           Sign In
         </Link>
       </div>

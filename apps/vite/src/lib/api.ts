@@ -4,6 +4,10 @@ import superjson from "superjson";
 
 import type { AppRouter } from "@acme/api";
 
+import { env } from "~/env";
+
+export const TRPC_ENDPOINT = "/trpc";
+
 /**
  * A set of typesafe hooks for consuming your API.
  */
@@ -20,7 +24,7 @@ export const useTrpcClient = () => {
       links: [
         httpBatchLink({
           transformer: superjson,
-          url: "http://localhost:3000/trpc",
+          url: `${env.VITE_API_URI}${TRPC_ENDPOINT}`,
           async headers() {
             return {
               "x-trpc-source": "vite-react",
