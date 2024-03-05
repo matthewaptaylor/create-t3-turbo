@@ -7,6 +7,9 @@ export const mi: typeof en = {
   "An error occurred. Please try again later.":
     "Kua puta he hapa. Whakamātau anō i muri.",
   "Loading...": "Tāpiritia...",
+  "Signing out...": "Takiuru ana...",
+  "An error occurred while signing out. Please try again later.":
+    "Kua puta he hapa i te wā e takiurutia ana. Whakamātau anō i muri.",
   "Sign in": "Takiuru",
   Email: "Īmēra",
   Password: "Kupuhipa",

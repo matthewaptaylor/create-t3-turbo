@@ -26,9 +26,7 @@ export const useTrpcClient = () => {
           transformer: superjson,
           url: `${env.VITE_API_URI}${TRPC_ENDPOINT}`,
           async headers() {
-            return {
-              "x-trpc-source": "vite-react",
-            };
+            return {};
           },
         }),
       ],

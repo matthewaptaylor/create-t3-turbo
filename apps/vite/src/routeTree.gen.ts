@@ -15,6 +15,7 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as AuthLayoutImport } from './routes/_auth-layout'
+import { Route as AuthLayoutAuthSignOutImport } from './routes/_auth-layout/auth/sign-out'
 import { Route as AuthLayoutAuthSignInImport } from './routes/_auth-layout/auth/sign-in'
 import { Route as AuthLayoutAuthResetPasswordImport } from './routes/_auth-layout/auth/reset-password'
 import { Route as AuthLayoutAuthForgotPasswordImport } from './routes/_auth-layout/auth/forgot-password'
@@ -40,6 +41,11 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const AuthLayoutAuthSignOutRoute = AuthLayoutAuthSignOutImport.update({
+  path: '/auth/sign-out',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
 
 const AuthLayoutAuthSignInRoute = AuthLayoutAuthSignInImport.update({
   path: '/auth/sign-in',
@@ -96,6 +102,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutAuthSignInImport
       parentRoute: typeof AuthLayoutImport
     }
+    '/_auth-layout/auth/sign-out': {
+      preLoaderRoute: typeof AuthLayoutAuthSignOutImport
+      parentRoute: typeof AuthLayoutImport
+    }
   }
 }
 
@@ -108,6 +118,7 @@ export const routeTree = rootRoute.addChildren([
     AuthLayoutAuthForgotPasswordRoute,
     AuthLayoutAuthResetPasswordRoute,
     AuthLayoutAuthSignInRoute,
+    AuthLayoutAuthSignOutRoute,
   ]),
   DashboardRoute,
 ])

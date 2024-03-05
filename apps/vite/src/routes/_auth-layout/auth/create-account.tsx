@@ -16,14 +16,14 @@ const CreateAccount: FC = () => {
 
   return (
     <>
-      <div className="text-center">
-        <h1 className="text-3xl font-bold">{t("Create an account")}</h1>
-      </div>
+      <h1 className="text-center text-3xl font-bold">
+        {t("Create an account")}
+      </h1>
 
-      <div className="w-full max-w-sm space-y-4">
+      <div className="space-y-4">
         <EmailPasswordCreateAccount redirect={redirect} />
 
-        <div className="w-full max-w-sm text-end text-sm">
+        <div className="text-end text-sm">
           {t("Already have an account?")}{" "}
           <Link to="/auth/sign-in" className="underline">
             {t("Sign in")}

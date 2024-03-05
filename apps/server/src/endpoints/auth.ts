@@ -35,7 +35,6 @@ export const setupFastifyAuthErrorHandler = (server: FastifyInstance) => {
 export const setupFastifyAuth = async (server: FastifyInstance) => {
   // Initialize SuperTokens
   supertokens.init({
-    debug: true,
     framework: "fastify",
     supertokens: {
       connectionURI: env.SUPERTOKENS_CONNECTION_URI,

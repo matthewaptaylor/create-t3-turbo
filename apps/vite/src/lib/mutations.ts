@@ -1,12 +1,14 @@
 import { useMutation } from "@tanstack/react-query";
-import { signIn } from "supertokens-web-js/recipe/emailpassword";
 import {
-  emailPasswordSignUp,
   sendPasswordResetEmail,
+  signIn,
+  signUp,
   submitNewPassword,
-} from "supertokens-web-js/recipe/thirdpartyemailpassword";
+} from "supertokens-web-js/recipe/emailpassword";
+import Session from "supertokens-web-js/recipe/session";
 
 export enum Mutations {
+  SIGN_OUT,
   EMAIL_PASSWORD_SIGN_IN,
   EMAIL_PASSWORD_CREATE_ACCOUNT,
   EMAIL_PASSWORD_PASSWORD_RESET,
@@ -17,6 +19,16 @@ interface UseEmailPasswordSignInMutationVariables {
   email: string;
   password: string;
 }
+
+/**
+ * Mutation hook to sign out.
+ * @returns
+ */
+export const useSignOutMutation = () =>
+  useMutation({
+    mutationKey: [Mutations.SIGN_OUT],
+    mutationFn: () => Session.signOut(),
+  });
 
 /**
  * Mutation hook to sign in with email and password.
@@ -59,7 +71,7 @@ export const useEmailPasswordCreateAccountMutation = () =>
       email,
       password,
     }: UseEmailPasswordCreateAccountMutationVariables) =>
-      emailPasswordSignUp({
+      signUp({
         formFields: [
           {
             id: "email",

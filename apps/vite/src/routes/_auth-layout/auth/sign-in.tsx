@@ -20,21 +20,19 @@ const SignIn: FC = () => {
 
   return (
     <>
-      <div className="text-center">
-        <h1 className="text-3xl font-bold">{t("Sign in")}</h1>
-      </div>
+      <h1 className="text-center text-3xl font-bold">{t("Sign in")}</h1>
 
-      <div className="w-full max-w-sm space-y-4">
+      <div className="space-y-4">
         <EmailPasswordSignIn redirect={redirect} />
 
-        <div className="w-full max-w-sm text-end text-sm">
+        <div className="text-end text-sm">
           {t("Don't have an account?")}{" "}
           <Link to="/auth/create-account" className="underline">
             {t("Create account")}
           </Link>
         </div>
 
-        <Separator className="my-4" />
+        <Separator />
 
         <ThirdPartySignIn
           useUrlQuery={useSignInWithGoogleUrlQuery}

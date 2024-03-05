@@ -57,9 +57,7 @@ export function TRPCProvider(props: { children: React.ReactNode }) {
           transformer: superjson,
           url: `${getBaseUrl()}/api/trpc`,
           headers() {
-            return {
-              "x-trpc-source": "expo-react",
-            };
+            return {};
           },
         }),
       ],

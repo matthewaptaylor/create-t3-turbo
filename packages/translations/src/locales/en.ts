@@ -7,6 +7,9 @@ export const en = {
   "An error occurred. Please try again later.":
     "An error occurred. Please try again later.",
   "Loading...": "Loading...",
+  "Signing out...": "Signing out...",
+  "An error occurred while signing out. Please try again later.":
+    "An error occurred while signing out. Please try again later.",
   "Sign in": "Sign in",
   Email: "Email",
   Password: "Password",

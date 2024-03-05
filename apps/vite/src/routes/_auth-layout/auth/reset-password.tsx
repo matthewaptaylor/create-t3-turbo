@@ -15,11 +15,11 @@ const CreateAccount: FC = () => {
 
   return (
     <>
-      <div className="text-center">
-        <h1 className="text-3xl font-bold">{t("Reset your password")}</h1>
-      </div>
+      <h1 className="text-center text-3xl font-bold">
+        {t("Reset your password")}
+      </h1>
 
-      <div className="w-full max-w-sm space-y-4">
+      <div className="space-y-4">
         <EmailPasswordResetPassword redirect={redirect} />
       </div>
     </>
