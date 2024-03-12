@@ -56,4 +56,5 @@ export const en = {
   "Your password has been reset.": "Your password has been reset.",
   "You can now sign in with your new password.":
     "You can now sign in with your new password.",
+  "Go to dashboard.": "Go to dashboard.",
 };

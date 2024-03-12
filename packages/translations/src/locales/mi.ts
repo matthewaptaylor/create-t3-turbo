@@ -17,6 +17,15 @@ export const mi: typeof en = {
   "An email has been sent to you. Click the link in the email to verify your email address.":
     "Kua tukuna tētahi īmēra ki a koe. Pāwhiria te hononga i roto i te īmēra kia whakapae tō wāhitau īmēra.",
   "Send another verification email": "Tukuna atu tētahi īmēra whakapae",
+  "Another verification email has been sent.":
+    "Kua tukuna atu tētahi īmēra whakapae.",
+  "Your email is already verified.": "Kua whakapae tō īmēra.",
+  "Your email verification link has expired.":
+    "Kua pau te hononga whakapae īmēra.",
+  "Send another email.": "Tukuna atu tētahi īmēra.",
+  "Click the button below to verify your email address.":
+    "Pāwhiria te pātene i raro nei kia whakapae tō wāhitau īmēra.",
+  "Your email has been verified.": "Kua whakapae tō īmēra.",
   Email: "Īmēra",
   Password: "Kupuhipa",
   "Confirm password": "Whakaū kupuhipa",
@@ -47,4 +56,5 @@ export const mi: typeof en = {
   "Your password has been reset.": "Kua whakakoretia tō kupuhipa.",
   "You can now sign in with your new password.":
     "Ka taea e koe te takiuru ināianei mā tō kupuhipa hōu.",
+  "Go to dashboard.": "Haere ki te papamahi.",
 };

@@ -22,7 +22,7 @@ export interface VerifyEmailProps {
 export const VerifyEmail: FC<VerifyEmailProps> = ({ redirect }) => {
   const { t } = useTranslation();
 
-  const { mutate, ...mutation } = useVerifyEmailMutation();
+  const { mutate, isIdle, ...mutation } = useVerifyEmailMutation();
 
   // Automatically process the verification if the user is already logged in
   const [automatic, setAutomatic] = useState<boolean | null>(null);
@@ -31,10 +31,10 @@ export const VerifyEmail: FC<VerifyEmailProps> = ({ redirect }) => {
       .then((exists) => {
         setAutomatic(exists);
 
-        if (exists) mutate();
+        if (exists && isIdle) mutate();
       })
       .catch(() => setAutomatic(false));
-  }, [mutate]);
+  }, [mutate, isIdle]);
 
   const mutationError = mutation.isError
     ? t("An error occurred. Please try again later.") // Field validation should be handled by the form
@@ -75,7 +75,10 @@ export const VerifyEmail: FC<VerifyEmailProps> = ({ redirect }) => {
 
           <AlertTitle>{t("Success!")}</AlertTitle>
           <AlertDescription>
-            {t("Your email has been verified.")}
+            {t("Your email has been verified.")}{" "}
+            <Link to="/dashboard" className="underline">
+              {t("Go to dashboard.")}
+            </Link>
           </AlertDescription>
         </Alert>
       )}

@@ -24,7 +24,7 @@ await fastify.register(fastifyTRPCPlugin, {
 });
 ```
 
-3. The adapter requires a `createContext` function. This function is responsible for generating the context for each request. We use it to handle authentication.
+2. The adapter requires a `createContext` function. This function is responsible for generating the context for each request. We use it to handle authentication.
 
 ```ts
 import type { CreateFastifyContextOptions } from "@trpc/server/adapters/fastify";

@@ -4,6 +4,8 @@ import { z } from "zod";
 export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
+    MAILJET_API_KEY: z.string().min(1),
+    MAILJET_API_SECRET: z.string().min(1),
     SUPERTOKENS_CONNECTION_URI: z.string().url(),
     SUPERTOKENS_API_KEY: z.string().min(1),
     SUPERTOKENS_APP_NAME: z.string().min(1),

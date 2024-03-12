@@ -10,6 +10,7 @@ import EmailVerification from "supertokens-node/recipe/emailverification";
 import Session from "supertokens-node/recipe/session";
 import ThirdParty from "supertokens-node/recipe/thirdparty";
 
+import { basicEmailTemplate, sendEmail } from "@acme/mailer";
 import { validatePassword } from "@acme/validators";
 
 import { env } from "../env";
@@ -52,6 +53,45 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
       Session.init(),
       EmailVerification.init({
         mode: "OPTIONAL",
+        emailDelivery: {
+          override: (originalImplementation) => {
+            return {
+              ...originalImplementation,
+              sendEmail: async function (input) {
+                // Send an email verification email using Mailjet
+                await sendEmail(
+                  {
+                    from: {
+                      Email: "matthewaptaylor@gmail.com",
+                      Name: "Matthew",
+                    },
+                    to: [
+                      {
+                        Email: input.user.email,
+                      },
+                    ],
+                    subject: "Verify your email",
+                    payload: {
+                      title: "Verify your email",
+                      preview:
+                        "Please verify your email address using this link.",
+                      greeting: "Hello!",
+                      beforeButton:
+                        "Please verify your email address using the button below.",
+                      buttonText: "Verify email",
+                      buttonLink: input.emailVerifyLink,
+                      afterButton:
+                        "If you did not sign up for an account, you can ignore this email.",
+                      goodbye: "Thanks!",
+                      address: "Acme Inc.",
+                    },
+                  },
+                  basicEmailTemplate,
+                );
+              },
+            };
+          },
+        },
       }),
       EmailPassword.init({
         signUpFeature: {
