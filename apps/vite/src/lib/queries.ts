@@ -3,7 +3,6 @@ import { getAuthorisationURLWithQueryParamsAndSetState } from "supertokens-web-j
 
 export enum Queries {
   SIGN_IN_WITH_GOOGLE_URL,
-  DOES_EMAIL_EXIST,
 }
 
 /**

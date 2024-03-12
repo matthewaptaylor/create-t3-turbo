@@ -6,6 +6,7 @@ import {
   plugin as supertokensFastifyPlugin,
 } from "supertokens-node/framework/fastify";
 import EmailPassword from "supertokens-node/recipe/emailpassword";
+import EmailVerification from "supertokens-node/recipe/emailverification";
 import Session from "supertokens-node/recipe/session";
 import ThirdParty from "supertokens-node/recipe/thirdparty";
 
@@ -49,6 +50,9 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
     },
     recipeList: [
       Session.init(),
+      EmailVerification.init({
+        mode: "OPTIONAL",
+      }),
       EmailPassword.init({
         signUpFeature: {
           formFields: [

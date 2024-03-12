@@ -2,7 +2,10 @@ import type { FC } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 
 import { Button } from "~/components/ui/button";
-import { redirectIfUnauthenticated } from "~/lib/router";
+import {
+  redirectIfEmailNotVerified,
+  redirectIfNotAuthenticated,
+} from "~/lib/router";
 
 const Dashboard: FC = () => {
   return (
@@ -18,6 +21,7 @@ const Dashboard: FC = () => {
 export const Route = createFileRoute("/dashboard")({
   component: Dashboard,
   beforeLoad: async ({ location }) => {
-    await redirectIfUnauthenticated(location.href);
+    await redirectIfNotAuthenticated(location.href);
+    await redirectIfEmailNotVerified(location.href);
   },
 });

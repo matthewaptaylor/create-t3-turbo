@@ -15,6 +15,8 @@ import { createFileRoute } from '@tanstack/react-router'
 import { Route as rootRoute } from './routes/__root'
 import { Route as DashboardImport } from './routes/dashboard'
 import { Route as AuthLayoutImport } from './routes/_auth-layout'
+import { Route as AuthLayoutAuthVerifyEmailImport } from './routes/_auth-layout/auth/verify-email'
+import { Route as AuthLayoutAuthUnverifiedEmailImport } from './routes/_auth-layout/auth/unverified-email'
 import { Route as AuthLayoutAuthSignOutImport } from './routes/_auth-layout/auth/sign-out'
 import { Route as AuthLayoutAuthSignInImport } from './routes/_auth-layout/auth/sign-in'
 import { Route as AuthLayoutAuthResetPasswordImport } from './routes/_auth-layout/auth/reset-password'
@@ -41,6 +43,17 @@ const IndexLazyRoute = IndexLazyImport.update({
   path: '/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+
+const AuthLayoutAuthVerifyEmailRoute = AuthLayoutAuthVerifyEmailImport.update({
+  path: '/auth/verify-email',
+  getParentRoute: () => AuthLayoutRoute,
+} as any)
+
+const AuthLayoutAuthUnverifiedEmailRoute =
+  AuthLayoutAuthUnverifiedEmailImport.update({
+    path: '/auth/unverified-email',
+    getParentRoute: () => AuthLayoutRoute,
+  } as any)
 
 const AuthLayoutAuthSignOutRoute = AuthLayoutAuthSignOutImport.update({
   path: '/auth/sign-out',
@@ -106,6 +119,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutAuthSignOutImport
       parentRoute: typeof AuthLayoutImport
     }
+    '/_auth-layout/auth/unverified-email': {
+      preLoaderRoute: typeof AuthLayoutAuthUnverifiedEmailImport
+      parentRoute: typeof AuthLayoutImport
+    }
+    '/_auth-layout/auth/verify-email': {
+      preLoaderRoute: typeof AuthLayoutAuthVerifyEmailImport
+      parentRoute: typeof AuthLayoutImport
+    }
   }
 }
 
@@ -119,6 +140,8 @@ export const routeTree = rootRoute.addChildren([
     AuthLayoutAuthResetPasswordRoute,
     AuthLayoutAuthSignInRoute,
     AuthLayoutAuthSignOutRoute,
+    AuthLayoutAuthUnverifiedEmailRoute,
+    AuthLayoutAuthVerifyEmailRoute,
   ]),
   DashboardRoute,
 ])

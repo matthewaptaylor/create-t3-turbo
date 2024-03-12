@@ -2,7 +2,6 @@ import type { inferRouterInputs, inferRouterOutputs } from "@trpc/server";
 
 import type { AppRouter } from "./root";
 import type { Session, TRPCContext } from "./trpc";
-import { initDb } from "./db";
 import { appRouter } from "./root";
 import { createCallerFactory, SessionErrorEnum } from "./trpc";
 
@@ -31,5 +30,5 @@ type RouterInputs = inferRouterInputs<AppRouter>;
  **/
 type RouterOutputs = inferRouterOutputs<AppRouter>;
 
-export { appRouter, createCaller, initDb, SessionErrorEnum };
+export { appRouter, createCaller, SessionErrorEnum };
 export type { AppRouter, RouterInputs, RouterOutputs, TRPCContext, Session };

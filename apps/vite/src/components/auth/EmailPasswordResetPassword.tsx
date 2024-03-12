@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import {
   faArrowsRotate,
+  faCheck,
   faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -65,9 +66,9 @@ export const EmailPasswordResetPassword: FC<
   const invalidTokenError =
     mutation.data?.status === "RESET_PASSWORD_INVALID_TOKEN_ERROR" ? (
       <>
-        {t("Your password reset link has expired.")}
-        <Link to="/auth/forgot-password">
-          {t("Send another password reset email.")}
+        {t("Your password reset link has expired.")}{" "}
+        <Link to="/auth/forgot-password" className="underline">
+          {t("Send another email.")}
         </Link>
       </>
     ) : null;
@@ -147,7 +148,7 @@ export const EmailPasswordResetPassword: FC<
 
         {mutation.data?.status === "OK" && (
           <Alert variant="default">
-            <FontAwesomeIcon icon={faExclamationTriangle} />
+            <FontAwesomeIcon icon={faCheck} />
 
             <AlertTitle>{t("Success!")}</AlertTitle>
             <AlertDescription>

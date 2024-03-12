@@ -6,15 +6,7 @@ This package is responsible for defining the tRPC API for the Acme app. It is de
 
 There are some required steps when running the API on a server
 
-1. Before registering up the adapter, you need to initialise Prisma.
-
-```ts
-import { initDb } from "@acme/api";
-
-await initDb();
-```
-
-2. Then you can set up the adapter. In this example, we use the `fastify` adapter.
+1. First you can set up the adapter. In this example, we use the `fastify` adapter.
 
 ```ts
 import type { FastifyTRPCPluginOptions } from "@trpc/server/adapters/fastify";
@@ -51,6 +43,8 @@ const createTRPCContext = async ({
     return {
       session,
       sessionError: null,
+      prisma,
+      supertokens,
     };
   } catch (e) {
     // Could not get user session, return error
@@ -59,6 +53,8 @@ const createTRPCContext = async ({
     return {
       session: null,
       sessionError: e,
+      prisma,
+      supertokens,
     };
   }
 };

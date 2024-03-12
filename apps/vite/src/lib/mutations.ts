@@ -5,10 +5,16 @@ import {
   signUp,
   submitNewPassword,
 } from "supertokens-web-js/recipe/emailpassword";
+import {
+  sendVerificationEmail,
+  verifyEmail,
+} from "supertokens-web-js/recipe/emailverification";
 import Session from "supertokens-web-js/recipe/session";
 
 export enum Mutations {
   SIGN_OUT,
+  SEND_VERIFICATION_EMAIL,
+  VERIFY_EMAIL,
   EMAIL_PASSWORD_SIGN_IN,
   EMAIL_PASSWORD_CREATE_ACCOUNT,
   EMAIL_PASSWORD_PASSWORD_RESET,
@@ -28,6 +34,26 @@ export const useSignOutMutation = () =>
   useMutation({
     mutationKey: [Mutations.SIGN_OUT],
     mutationFn: () => Session.signOut(),
+  });
+
+/**
+ * Mutation hook to send a verification email.
+ * @returns
+ */
+export const useSendVerificationEmailMutation = () =>
+  useMutation({
+    mutationKey: [Mutations.SEND_VERIFICATION_EMAIL],
+    mutationFn: () => sendVerificationEmail(),
+  });
+
+/**
+ * Mutation hook to verify an email.
+ * @returns
+ */
+export const useVerifyEmailMutation = () =>
+  useMutation({
+    mutationKey: [Mutations.VERIFY_EMAIL],
+    mutationFn: () => verifyEmail(),
   });
 
 /**

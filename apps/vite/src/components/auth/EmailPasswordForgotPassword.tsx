@@ -1,6 +1,7 @@
 import type { FC } from "react";
 import {
   faArrowsRotate,
+  faCheck,
   faExclamationTriangle,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -105,7 +106,7 @@ export const EmailPasswordForgotPassword: FC<
 
         {mutation.data?.status === "OK" && (
           <Alert variant="default">
-            <FontAwesomeIcon icon={faExclamationTriangle} />
+            <FontAwesomeIcon icon={faCheck} />
 
             <AlertTitle>{t("Success!")}</AlertTitle>
             <AlertDescription>

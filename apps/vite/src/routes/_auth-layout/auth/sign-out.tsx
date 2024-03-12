@@ -10,10 +10,13 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useTranslation } from "@acme/translations";
 
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
+import { useTitle } from "~/lib/hooks";
 import { useSignOutMutation } from "~/lib/mutations";
 
 const SignOut: FC = () => {
   const { t } = useTranslation();
+  useTitle(t("Sign out"));
+
   const navigate = useNavigate();
 
   const mutation = useSignOutMutation();

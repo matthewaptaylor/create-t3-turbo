@@ -11,6 +11,21 @@ export const en = {
   "An error occurred while signing out. Please try again later.":
     "An error occurred while signing out. Please try again later.",
   "Sign in": "Sign in",
+  "Sign out": "Sign out",
+  "Verify your email": "Verify your email",
+  "Verify email": "Verify email",
+  "An email has been sent to you. Click the link in the email to verify your email address.":
+    "An email has been sent to you. Click the link in the email to verify your email address.",
+  "Send another verification email": "Send another verification email",
+  "Another verification email has been sent.":
+    "Another verification email has been sent.",
+  "Your email is already verified.": "Your email is already verified.",
+  "Your email verification link has expired.":
+    "Your email verification link has expired.",
+  "Send another email.": "Send another email.",
+  "Click the button below to verify your email address.":
+    "Click the button below to verify your email address.",
+  "Your email has been verified.": "Your email has been verified.",
   Email: "Email",
   Password: "Password",
   "Confirm password": "Confirm password",
@@ -38,7 +53,6 @@ export const en = {
   "Reset password": "Reset password",
   "Your password reset link has expired.":
     "Your password reset link has expired.",
-  "Send another password reset email.": "Send another password reset email.",
   "Your password has been reset.": "Your password has been reset.",
   "You can now sign in with your new password.":
     "You can now sign in with your new password.",

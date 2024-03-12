@@ -9,7 +9,7 @@ import { useTitle } from "~/lib/hooks";
 
 const CreateAccount: FC = () => {
   const { t } = useTranslation();
-  useTitle(t("Create an account"));
+  useTitle(t("Reset your password"));
 
   const { redirect } = Route.useSearch();
 

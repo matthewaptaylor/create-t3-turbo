@@ -3,15 +3,19 @@ import type {
   FastifyTRPCPluginOptions,
 } from "@trpc/server/adapters/fastify";
 import type { FastifyInstance } from "fastify";
+import { PrismaClient } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
-import { Error as SuperTokensError } from "supertokens-node";
+import supertokens, { Error as SuperTokensError } from "supertokens-node";
+import { EmailVerificationClaim } from "supertokens-node/recipe/emailverification";
 import SuperTokensSession from "supertokens-node/recipe/session";
 
 import type { AppRouter, Session, TRPCContext } from "@acme/api";
-import { appRouter, initDb, SessionErrorEnum } from "@acme/api";
+import { appRouter, SessionErrorEnum } from "@acme/api";
 
 export const TRPC_ENDPOINT = "/trpc";
+
+export const prisma = new PrismaClient();
 
 /**
  * This helper generates the "internals" for a tRPC context. The API handler
@@ -26,14 +30,25 @@ const createTRPCContext = async ({
   try {
     // Get the user session
     const sessionContainer = await SuperTokensSession.getSession(req, res);
+
+    // Get the user's email verification claim
+    const payload: unknown = sessionContainer.getAccessTokenPayload();
+    const emailValidation = await EmailVerificationClaim.validators
+      .isVerified()
+      .validate(payload, {});
+
     const session: Session = {
       userId: sessionContainer.getUserId(),
+      recipeUserId: sessionContainer.getRecipeUserId().getAsString(),
+      emailVerified: emailValidation.isValid,
     };
 
     // Return the authorised session
     return {
       session,
       sessionError: null,
+      prisma,
+      supertokens,
     };
   } catch (e) {
     let sessionError: SessionErrorEnum;
@@ -65,8 +80,26 @@ const createTRPCContext = async ({
     return {
       session: null,
       sessionError,
+      prisma,
+      supertokens,
     };
   }
+};
+
+/**
+ * Initialize the database. This must be called before registering the API on
+ * a server.
+ */
+const initDb = async () => {
+  try {
+    // ... you will write your Prisma Client queries here
+    await prisma.$connect();
+  } catch (e) {
+    console.error(e);
+    await prisma.$disconnect();
+    throw e;
+  }
+  await prisma.$disconnect();
 };
 
 /**

@@ -1,3 +1,5 @@
+import type { PrismaClient } from "@prisma/client";
+import type supertokens from "supertokens-node";
 import { initTRPC, TRPCError } from "@trpc/server";
 import superjson from "superjson";
 import { ZodError } from "zod";
@@ -6,7 +8,20 @@ import { ZodError } from "zod";
  * The user session.
  */
 export interface Session {
+  /**
+   * The user ID.
+   */
   userId: string;
+
+  /**
+   * The user ID specific to the login method used.
+   */
+  recipeUserId: string;
+
+  /**
+   * Whether the user's email is verified.
+   */
+  emailVerified: boolean;
 }
 
 /**
@@ -44,7 +59,17 @@ type SessionContext = AuthorisedSessionContext | UnauthorisedSessionContext;
  * provided to the tRPC adapter.
  * @see https://trpc.io/docs/server/context
  */
-export type TRPCContext = SessionContext;
+export type TRPCContext = SessionContext & {
+  /**
+   * An instance of the Prisma Client.
+   */
+  prisma: PrismaClient;
+
+  /**
+   * An instance of the SuperTokens library.
+   */
+  supertokens: typeof supertokens;
+};
 
 /**
  * The initialised tRPC instance.
@@ -83,7 +108,7 @@ export const publicProcedure = t.procedure;
 /**
  * Protected (authenticated) procedure. It guarantees that a user is logged in.
  */
-export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
+export const protectedProcedure = publicProcedure.use(({ ctx, next }) => {
   if (ctx.session === null) throw new TRPCError({ code: "UNAUTHORIZED" });
 
   return next({
@@ -93,3 +118,18 @@ export const protectedProcedure = t.procedure.use(({ ctx, next }) => {
     },
   });
 });
+
+export const protectedProcedureWithUser = protectedProcedure.use(
+  async ({ ctx, next }) => {
+    const user = await ctx.supertokens.getUser(ctx.session.userId);
+    if (user === undefined)
+      throw new TRPCError({ code: "INTERNAL_SERVER_ERROR" }); // Should never happen
+
+    return next({
+      ctx: {
+        ...ctx,
+        user,
+      },
+    });
+  },
+);

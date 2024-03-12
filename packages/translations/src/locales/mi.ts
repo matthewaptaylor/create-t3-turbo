@@ -11,6 +11,12 @@ export const mi: typeof en = {
   "An error occurred while signing out. Please try again later.":
     "Kua puta he hapa i te wā e takiurutia ana. Whakamātau anō i muri.",
   "Sign in": "Takiuru",
+  "Sign out": "Takiuru",
+  "Verify your email": "Whakapae tō īmēra",
+  "Verify email": "Whakapae īmēra",
+  "An email has been sent to you. Click the link in the email to verify your email address.":
+    "Kua tukuna tētahi īmēra ki a koe. Pāwhiria te hononga i roto i te īmēra kia whakapae tō wāhitau īmēra.",
+  "Send another verification email": "Tukuna atu tētahi īmēra whakapae",
   Email: "Īmēra",
   Password: "Kupuhipa",
   "Confirm password": "Whakaū kupuhipa",
@@ -38,8 +44,6 @@ export const mi: typeof en = {
   "Reset password": "Whakakore kupuhipa",
   "Your password reset link has expired.":
     "Kua pau te hononga whakakore kupuhipa.",
-  "Send another password reset email.":
-    "Tukuna atu tētahi īmēra whakakore kupuhipa.",
   "Your password has been reset.": "Kua whakakoretia tō kupuhipa.",
   "You can now sign in with your new password.":
     "Ka taea e koe te takiuru ināianei mā tō kupuhipa hōu.",

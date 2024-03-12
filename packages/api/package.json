@@ -14,7 +14,6 @@
   },
   "dependencies": {
     "@acme/validators": "workspace:^0.1.0",
-    "@prisma/client": "^5.10.2",
     "@trpc/server": "11.0.0-next-beta.294",
     "superjson": "2.2.1",
     "zod": "^3.22.4"
@@ -23,8 +22,10 @@
     "@acme/eslint-config": "workspace:^0.2.0",
     "@acme/prettier-config": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
+    "@prisma/client": "^5.10.2",
     "eslint": "^8.56.0",
     "prettier": "^3.2.5",
+    "supertokens-node": "^16.7.3",
     "typescript": "^5.3.3"
   },
   "eslintConfig": {
@@ -36,5 +37,9 @@
   "prettier": "@acme/prettier-config",
   "prisma": {
     "schema": "../../prisma/schema.prisma"
+  },
+  "peerDependencies": {
+    "@prisma/client": "^5.10.2",
+    "supertokens-node": "^16.7.3"
   }
 }
