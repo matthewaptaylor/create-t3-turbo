@@ -15,9 +15,9 @@ import { Button } from "~/components/ui/button";
 
 export interface ThirdPartySignInProps {
   /**
-   * The query to get the URL to redirect to.
+   * The query result to get the URL to redirect to.
    */
-  useUrlQuery: () => UseQueryResult<string, Error>;
+  linkQuery: UseQueryResult<string, Error>;
 
   /**
    * The icon to display next to the button text.
@@ -41,19 +41,18 @@ export interface ThirdPartySignInProps {
  * @returns
  */
 export const ThirdPartySignIn: FC<ThirdPartySignInProps> = ({
-  useUrlQuery,
+  linkQuery,
   icon,
   text,
   errorText,
 }) => {
   const { t } = useTranslation();
 
-  const link = useUrlQuery();
   const [linkClicked, setLinkClicked] = useState(false);
 
   useEffect(() => {
-    if (link.data && linkClicked) window.location.href = link.data;
-  }, [link.data, linkClicked]);
+    if (linkQuery.data && linkClicked) window.location.href = linkQuery.data;
+  }, [linkQuery.data, linkClicked]);
 
   return (
     <div className="space-y-2">
@@ -63,10 +62,10 @@ export const ThirdPartySignIn: FC<ThirdPartySignInProps> = ({
         onClick={() => {
           setLinkClicked(true);
 
-          if (link.isError) void link.refetch();
+          if (linkQuery.isError) void linkQuery.refetch();
         }}
       >
-        {link.isPending && linkClicked ? (
+        {linkQuery.isPending && linkClicked ? (
           <FontAwesomeIcon
             icon={faArrowsRotate}
             role="status"
@@ -79,7 +78,7 @@ export const ThirdPartySignIn: FC<ThirdPartySignInProps> = ({
         {text}
       </Button>
 
-      {link.isError && linkClicked && (
+      {linkQuery.isError && linkClicked && (
         <Alert variant="destructive">
           <FontAwesomeIcon icon={faExclamationTriangle} />
 

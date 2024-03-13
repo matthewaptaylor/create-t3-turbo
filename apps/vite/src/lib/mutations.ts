@@ -9,7 +9,6 @@ import {
   emailPasswordSignUp,
   sendPasswordResetEmail,
   submitNewPassword,
-  thirdPartySignInAndUp,
 } from "supertokens-web-js/recipe/thirdpartyemailpassword";
 
 export enum Mutations {
@@ -158,9 +157,3 @@ export const useEmailPasswordNewPasswordMutation = () => {
       }),
   });
 };
-
-export const useThirdPartySignInUpMutation = () =>
-  useMutation({
-    mutationKey: [Mutations.THIRD_PARTY_SIGN_IN_UP],
-    mutationFn: () => thirdPartySignInAndUp(),
-  });

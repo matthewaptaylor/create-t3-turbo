@@ -120,65 +120,75 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
           },
         ],
         override: {
-          functions: (originalImplementation) => {
-            return {
-              ...originalImplementation,
+          apis: (originalImplementation) => ({
+            ...originalImplementation,
+            authorisationUrlGET: async function (input) {
+              console.log(input);
+              const response =
+                await originalImplementation.authorisationUrlGET!(input);
+              console.log(response);
 
-              // Override the email password sign up function
-              emailPasswordSignUp: async function (input) {
-                const response =
-                  await originalImplementation.emailPasswordSignUp(input);
+              return response;
+            },
+          }),
+          functions: (originalImplementation) => ({
+            ...originalImplementation,
+
+            // Override the email password sign up function
+            emailPasswordSignUp: async function (input) {
+              const response =
+                await originalImplementation.emailPasswordSignUp(input);
+
+              if (
+                response.status === "OK" &&
+                response.user.loginMethods.length === 1
+              ) {
+                // Sign up completed
+              }
+
+              return response;
+            },
+
+            // Override the email password sign in function
+            emailPasswordSignIn: async function (input) {
+              const response =
+                await originalImplementation.emailPasswordSignIn(input);
+
+              if (response.status === "OK") {
+                // Sign in completed
+              }
+
+              return response;
+            },
+
+            // Override the third party sign in/up function
+            thirdPartySignInUp: async function (input) {
+              const response =
+                await originalImplementation.thirdPartySignInUp(input);
+
+              if (response.status === "OK") {
+                // Sign in/up completed
+
+                // const firstName =
+                //   response.rawUserInfoFromProvider.fromUserInfoAPI!
+                //     .first_name;
+
+                console.log(input.userContext);
+                console.log(response);
 
                 if (
-                  response.status === "OK" &&
+                  response.createdNewRecipeUser &&
                   response.user.loginMethods.length === 1
                 ) {
-                  // Sign up completed
+                  // New user signed up
+                } else {
+                  // Existing user signed in
                 }
+              }
 
-                return response;
-              },
-
-              // Override the email password sign in function
-              emailPasswordSignIn: async function (input) {
-                const response =
-                  await originalImplementation.emailPasswordSignIn(input);
-
-                if (response.status === "OK") {
-                  // Sign in completed
-                }
-
-                return response;
-              },
-
-              // Override the third party sign in/up function
-              thirdPartySignInUp: async function (input) {
-                const response =
-                  await originalImplementation.thirdPartySignInUp(input);
-
-                if (response.status === "OK") {
-                  // Sign in/up completed
-
-                  // const firstName =
-                  //   response.rawUserInfoFromProvider.fromUserInfoAPI!
-                  //     .first_name;
-
-                  console.log(JSON.stringify(response));
-
-                  if (
-                    response.createdNewRecipeUser &&
-                    response.user.loginMethods.length === 1
-                  ) {
-                    // New user signed up
-                  } else {
-                    // Existing user signed in
-                  }
-                }
-
-                return response;
-              },
-            };
-          },
+              return response;
+            },
+          }),
         },
       }),
     ],

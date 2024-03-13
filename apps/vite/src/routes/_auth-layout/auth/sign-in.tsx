@@ -35,7 +35,7 @@ const SignIn: FC = () => {
         <Separator />
 
         <ThirdPartySignIn
-          useUrlQuery={useSignInWithGoogleUrlQuery}
+          linkQuery={useSignInWithGoogleUrlQuery(redirect)}
           icon={faGoogle}
           text={t("Sign in with Google")}
           errorText={t(
