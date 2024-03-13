@@ -5,7 +5,9 @@ import {
   errorHandler as supertokensFastifyErrorHandler,
   plugin as supertokensFastifyPlugin,
 } from "supertokens-node/framework/fastify";
-import EmailVerification from "supertokens-node/recipe/emailverification";
+import EmailVerification, {
+  EmailVerificationClaim,
+} from "supertokens-node/recipe/emailverification";
 import Session from "supertokens-node/recipe/session";
 import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
@@ -13,6 +15,7 @@ import { basicEmailTemplate, sendEmail } from "@acme/mailer";
 import { validatePassword } from "@acme/validators";
 
 import { env } from "../env";
+import { isRecord } from "../utils";
 
 export const AUTH_ENDPOINT = "/auth"; // Same as apps/vite/src/lib/auth.ts
 
@@ -49,7 +52,52 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
       websiteBasePath: WEBSITE_AUTH_PATH,
     },
     recipeList: [
-      Session.init(),
+      Session.init({
+        override: {
+          functions: (originalImplementation) => ({
+            ...originalImplementation,
+            createNewSession: async function (input) {
+              const result =
+                await originalImplementation.createNewSession(input);
+
+              if (
+                isRecord(input.userContext) &&
+                input.userContext.isSignUp === true
+              ) {
+                // This is a new user, check if they need to verify their email
+                const payload: unknown = result.getAccessTokenPayload();
+                const emailValidation = await EmailVerificationClaim.validators
+                  .isVerified()
+                  .validate(payload, input.userContext);
+
+                if (!emailValidation.isValid) {
+                  // Email is not verified, get user's email
+                  const userId = result.getUserId();
+                  const recipeUserId = result.getRecipeUserId();
+                  const user = await supertokens.getUser(userId);
+                  const method = user?.loginMethods.find(
+                    (method) =>
+                      method.recipeUserId.getAsString() ===
+                      recipeUserId.getAsString(),
+                  );
+                  const email = method?.email;
+
+                  // Send an email verification email
+                  await EmailVerification.sendEmailVerificationEmail(
+                    result.getTenantId(),
+                    userId,
+                    recipeUserId,
+                    email,
+                    input.userContext,
+                  );
+                }
+              }
+
+              return result;
+            },
+          }),
+        },
+      }),
       EmailVerification.init({
         mode: "OPTIONAL",
         emailDelivery: {
@@ -120,17 +168,6 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
           },
         ],
         override: {
-          apis: (originalImplementation) => ({
-            ...originalImplementation,
-            authorisationUrlGET: async function (input) {
-              console.log(input);
-              const response =
-                await originalImplementation.authorisationUrlGET!(input);
-              console.log(response);
-
-              return response;
-            },
-          }),
           functions: (originalImplementation) => ({
             ...originalImplementation,
 
@@ -144,6 +181,10 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
                 response.user.loginMethods.length === 1
               ) {
                 // Sign up completed
+
+                // Record as a sign up for the session
+                if (isRecord(input.userContext))
+                  input.userContext.isSignUp = true;
               }
 
               return response;
@@ -181,6 +222,10 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
                   response.user.loginMethods.length === 1
                 ) {
                   // New user signed up
+
+                  // Record as a sign up for the session
+                  if (isRecord(input.userContext))
+                    input.userContext.isSignUp = true;
                 } else {
                   // Existing user signed in
                 }

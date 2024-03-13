@@ -103,8 +103,8 @@ export const EmailPasswordCreateAccount: FC<
               })
                 .then((res) =>
                   res.doesExist
-                    ? undefined
-                    : t("An account already exists with this email address."),
+                    ? t("An account already exists with this email address.")
+                    : undefined,
                 )
                 .catch(() => undefined),
           }}
