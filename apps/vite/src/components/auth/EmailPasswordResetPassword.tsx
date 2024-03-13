@@ -152,7 +152,7 @@ export const EmailPasswordResetPassword: FC<
 
             <AlertTitle>{t("Success!")}</AlertTitle>
             <AlertDescription>
-              {t("Your password has been reset.")}
+              {t("Your password has been reset.")}{" "}
               <Link to="/auth/sign-in">
                 {t("You can now sign in with your new password.")}
               </Link>

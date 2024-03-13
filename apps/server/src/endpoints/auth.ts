@@ -5,10 +5,9 @@ import {
   errorHandler as supertokensFastifyErrorHandler,
   plugin as supertokensFastifyPlugin,
 } from "supertokens-node/framework/fastify";
-import EmailPassword from "supertokens-node/recipe/emailpassword";
 import EmailVerification from "supertokens-node/recipe/emailverification";
 import Session from "supertokens-node/recipe/session";
-import ThirdParty from "supertokens-node/recipe/thirdparty";
+import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpassword";
 
 import { basicEmailTemplate, sendEmail } from "@acme/mailer";
 import { validatePassword } from "@acme/validators";
@@ -93,9 +92,10 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
           },
         },
       }),
-      EmailPassword.init({
+      ThirdPartyEmailPassword.init({
         signUpFeature: {
           formFields: [
+            // Custom password validation
             {
               id: "password",
               validate: async (value) => {
@@ -105,22 +105,80 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
             },
           ],
         },
-      }), // initializes signin / sign up features
-      ThirdParty.init({
-        signInAndUpFeature: {
-          providers: [
-            {
-              config: {
-                thirdPartyId: "google",
-                clients: [
-                  {
-                    clientId: env.GOOGLE_CLIENT_ID,
-                    clientSecret: env.GOOGLE_CLIENT_SECRET,
-                  },
-                ],
-              },
+        providers: [
+          // Google OAuth
+          {
+            config: {
+              thirdPartyId: "google",
+              clients: [
+                {
+                  clientId: env.GOOGLE_CLIENT_ID,
+                  clientSecret: env.GOOGLE_CLIENT_SECRET,
+                },
+              ],
             },
-          ],
+          },
+        ],
+        override: {
+          functions: (originalImplementation) => {
+            return {
+              ...originalImplementation,
+
+              // Override the email password sign up function
+              emailPasswordSignUp: async function (input) {
+                const response =
+                  await originalImplementation.emailPasswordSignUp(input);
+
+                if (
+                  response.status === "OK" &&
+                  response.user.loginMethods.length === 1
+                ) {
+                  // Sign up completed
+                }
+
+                return response;
+              },
+
+              // Override the email password sign in function
+              emailPasswordSignIn: async function (input) {
+                const response =
+                  await originalImplementation.emailPasswordSignIn(input);
+
+                if (response.status === "OK") {
+                  // Sign in completed
+                }
+
+                return response;
+              },
+
+              // Override the third party sign in/up function
+              thirdPartySignInUp: async function (input) {
+                const response =
+                  await originalImplementation.thirdPartySignInUp(input);
+
+                if (response.status === "OK") {
+                  // Sign in/up completed
+
+                  // const firstName =
+                  //   response.rawUserInfoFromProvider.fromUserInfoAPI!
+                  //     .first_name;
+
+                  console.log(JSON.stringify(response));
+
+                  if (
+                    response.createdNewRecipeUser &&
+                    response.user.loginMethods.length === 1
+                  ) {
+                    // New user signed up
+                  } else {
+                    // Existing user signed in
+                  }
+                }
+
+                return response;
+              },
+            };
+          },
         },
       }),
     ],

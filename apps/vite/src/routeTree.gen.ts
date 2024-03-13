@@ -22,6 +22,7 @@ import { Route as AuthLayoutAuthSignInImport } from './routes/_auth-layout/auth/
 import { Route as AuthLayoutAuthResetPasswordImport } from './routes/_auth-layout/auth/reset-password'
 import { Route as AuthLayoutAuthForgotPasswordImport } from './routes/_auth-layout/auth/forgot-password'
 import { Route as AuthLayoutAuthCreateAccountImport } from './routes/_auth-layout/auth/create-account'
+import { Route as AuthLayoutAuthCallbackProviderIdImport } from './routes/_auth-layout/auth/callback.$providerId'
 
 // Create Virtual Routes
 
@@ -83,6 +84,12 @@ const AuthLayoutAuthCreateAccountRoute =
     getParentRoute: () => AuthLayoutRoute,
   } as any)
 
+const AuthLayoutAuthCallbackProviderIdRoute =
+  AuthLayoutAuthCallbackProviderIdImport.update({
+    path: '/auth/callback/$providerId',
+    getParentRoute: () => AuthLayoutRoute,
+  } as any)
+
 // Populate the FileRoutesByPath interface
 
 declare module '@tanstack/react-router' {
@@ -127,6 +134,10 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthLayoutAuthVerifyEmailImport
       parentRoute: typeof AuthLayoutImport
     }
+    '/_auth-layout/auth/callback/$providerId': {
+      preLoaderRoute: typeof AuthLayoutAuthCallbackProviderIdImport
+      parentRoute: typeof AuthLayoutImport
+    }
   }
 }
 
@@ -142,6 +153,7 @@ export const routeTree = rootRoute.addChildren([
     AuthLayoutAuthSignOutRoute,
     AuthLayoutAuthUnverifiedEmailRoute,
     AuthLayoutAuthVerifyEmailRoute,
+    AuthLayoutAuthCallbackProviderIdRoute,
   ]),
   DashboardRoute,
 ])

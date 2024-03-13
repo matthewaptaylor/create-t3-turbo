@@ -8,6 +8,7 @@ export const mi: typeof en = {
     "Kua puta he hapa. Whakamātau anō i muri.",
   "Loading...": "Tāpiritia...",
   "Signing out...": "Takiuru ana...",
+  "Signing in...": "Takiuru ana...",
   "An error occurred while signing out. Please try again later.":
     "Kua puta he hapa i te wā e takiurutia ana. Whakamātau anō i muri.",
   "Sign in": "Takiuru",
@@ -57,4 +58,8 @@ export const mi: typeof en = {
   "You can now sign in with your new password.":
     "Ka taea e koe te takiuru ināianei mā tō kupuhipa hōu.",
   "Go to dashboard.": "Haere ki te papamahi.",
+  "You cannot sign in with this account. Please use another method.":
+    "Kāore koe e taea te takiuru mā tēnei kaute. Whakamahia tētahi huarahi kē.",
+  "No email address is associated with this account. Please try another method.":
+    "Kāore he īmēra i honoa ki tēnei kaute. Whakamātau ki tētahi huarahi kē.",
 };

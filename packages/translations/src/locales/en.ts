@@ -8,6 +8,7 @@ export const en = {
     "An error occurred. Please try again later.",
   "Loading...": "Loading...",
   "Signing out...": "Signing out...",
+  "Signing in...": "Signing in...",
   "An error occurred while signing out. Please try again later.":
     "An error occurred while signing out. Please try again later.",
   "Sign in": "Sign in",
@@ -57,4 +58,9 @@ export const en = {
   "You can now sign in with your new password.":
     "You can now sign in with your new password.",
   "Go to dashboard.": "Go to dashboard.",
+  "You cannot sign in with this account.":
+    "You cannot sign in with this account.",
+  "No email address is associated with this account.":
+    "No email address is associated with this account.",
+  "Please try another method.": "Please try another method.",
 };

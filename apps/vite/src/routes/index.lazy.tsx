@@ -1,15 +1,9 @@
+import type { FC } from "react";
 import { createLazyFileRoute } from "@tanstack/react-router";
 
 import { Button } from "~/components/ui/button";
-import { api } from "~/lib/api";
 
-export const Route = createLazyFileRoute("/")({
-  component: Index,
-});
-
-function Index() {
-  const a = api.context.getContext.useQuery();
-  console.log(a);
+const Index: FC = () => {
   return (
     <main className="container h-screen py-16">
       <div className="flex flex-col items-center justify-center gap-4">
@@ -20,4 +14,8 @@ function Index() {
       <Button>Click</Button>
     </main>
   );
-}
+};
+
+export const Route = createLazyFileRoute("/")({
+  component: Index,
+});

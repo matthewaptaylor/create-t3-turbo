@@ -1,15 +1,16 @@
 import { useMutation } from "@tanstack/react-query";
 import {
-  sendPasswordResetEmail,
-  signIn,
-  signUp,
-  submitNewPassword,
-} from "supertokens-web-js/recipe/emailpassword";
-import {
   sendVerificationEmail,
   verifyEmail,
 } from "supertokens-web-js/recipe/emailverification";
 import Session from "supertokens-web-js/recipe/session";
+import {
+  emailPasswordSignIn,
+  emailPasswordSignUp,
+  sendPasswordResetEmail,
+  submitNewPassword,
+  thirdPartySignInAndUp,
+} from "supertokens-web-js/recipe/thirdpartyemailpassword";
 
 export enum Mutations {
   SIGN_OUT,
@@ -19,6 +20,7 @@ export enum Mutations {
   EMAIL_PASSWORD_CREATE_ACCOUNT,
   EMAIL_PASSWORD_PASSWORD_RESET,
   EMAIL_PASSWORD_NEW_PASSWORD,
+  THIRD_PARTY_SIGN_IN_UP,
 }
 
 interface UseEmailPasswordSignInMutationVariables {
@@ -67,7 +69,7 @@ export const useEmailPasswordSignInMutation = () =>
       email,
       password,
     }: UseEmailPasswordSignInMutationVariables) =>
-      signIn({
+      emailPasswordSignIn({
         formFields: [
           {
             id: "email",
@@ -97,7 +99,7 @@ export const useEmailPasswordCreateAccountMutation = () =>
       email,
       password,
     }: UseEmailPasswordCreateAccountMutationVariables) =>
-      signUp({
+      emailPasswordSignUp({
         formFields: [
           {
             id: "email",
@@ -156,3 +158,9 @@ export const useEmailPasswordNewPasswordMutation = () => {
       }),
   });
 };
+
+export const useThirdPartySignInUpMutation = () =>
+  useMutation({
+    mutationKey: [Mutations.THIRD_PARTY_SIGN_IN_UP],
+    mutationFn: () => thirdPartySignInAndUp(),
+  });

@@ -22,19 +22,21 @@ export interface VerifyEmailProps {
 export const VerifyEmail: FC<VerifyEmailProps> = ({ redirect }) => {
   const { t } = useTranslation();
 
-  const { mutate, isIdle, ...mutation } = useVerifyEmailMutation();
+  const { mutate, ...mutation } = useVerifyEmailMutation();
 
   // Automatically process the verification if the user is already logged in
   const [automatic, setAutomatic] = useState<boolean | null>(null);
   useEffect(() => {
+    if (automatic !== null) return;
+
     Session.doesSessionExist()
       .then((exists) => {
         setAutomatic(exists);
 
-        if (exists && isIdle) mutate();
+        if (exists) mutate();
       })
       .catch(() => setAutomatic(false));
-  }, [mutate, isIdle]);
+  }, [mutate, automatic]);
 
   const mutationError = mutation.isError
     ? t("An error occurred. Please try again later.") // Field validation should be handled by the form
@@ -54,11 +56,11 @@ export const VerifyEmail: FC<VerifyEmailProps> = ({ redirect }) => {
 
   return (
     <div className="space-y-4">
-      {!automatic && (
+      {automatic === false && (
         <p>{t("Click the button below to verify your email address.")}</p>
       )}
 
-      {automatic && mutation.isPending && (
+      {automatic === true && mutation.isPending && (
         <div className="text-center">
           <FontAwesomeIcon
             icon={faArrowsRotate}
@@ -92,7 +94,7 @@ export const VerifyEmail: FC<VerifyEmailProps> = ({ redirect }) => {
         </Alert>
       )}
 
-      {!automatic && (
+      {automatic === false && (
         <Button
           className="w-full"
           onClick={() => {

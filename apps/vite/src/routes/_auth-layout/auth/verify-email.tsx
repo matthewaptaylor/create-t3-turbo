@@ -6,10 +6,6 @@ import { useTranslation } from "@acme/translations";
 
 import { VerifyEmail } from "~/components/auth/VerifyEmail";
 import { useTitle } from "~/lib/hooks";
-import {
-  redirectIfEmailVerified,
-  redirectIfNotAuthenticated,
-} from "~/lib/router";
 
 const UnverifiedEmail: FC = () => {
   const { t } = useTranslation();
@@ -35,8 +31,4 @@ const unverifiedEmailSearchSchema = z.object({
 export const Route = createFileRoute("/_auth-layout/auth/verify-email")({
   component: UnverifiedEmail,
   validateSearch: (search) => unverifiedEmailSearchSchema.parse(search),
-  beforeLoad: async ({ location }) => {
-    await redirectIfNotAuthenticated(location.href);
-    await redirectIfEmailVerified();
-  },
 });
