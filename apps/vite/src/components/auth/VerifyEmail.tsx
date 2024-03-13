@@ -15,11 +15,7 @@ import { Button } from "~/components/ui/button";
 import { useVerifyEmailMutation } from "~/lib/mutations";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
-export interface VerifyEmailProps {
-  redirect?: string;
-}
-
-export const VerifyEmail: FC<VerifyEmailProps> = ({ redirect }) => {
+export const VerifyEmail: FC = () => {
   const { t } = useTranslation();
 
   const { mutate, ...mutation } = useVerifyEmailMutation();

@@ -18,21 +18,11 @@ import { Input, InputError } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useEmailPasswordNewPasswordMutation } from "~/lib/mutations";
 
-export interface EmailPasswordResetPasswordProps {
-  /**
-   * The URL to redirect to after a successful sign in.
-   */
-  redirect?: string;
-}
-
 /**
  * A form to create an account with an email and password.
- * @param props
  * @returns
  */
-export const EmailPasswordResetPassword: FC<
-  EmailPasswordResetPasswordProps
-> = ({ redirect }) => {
+export const EmailPasswordResetPassword: FC = () => {
   const { t } = useTranslation();
 
   const mutation = useEmailPasswordNewPasswordMutation();

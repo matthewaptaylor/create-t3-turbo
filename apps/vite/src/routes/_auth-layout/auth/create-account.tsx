@@ -25,7 +25,13 @@ const CreateAccount: FC = () => {
 
         <div className="text-end text-sm">
           {t("Already have an account?")}{" "}
-          <Link to="/auth/sign-in" className="underline">
+          <Link
+            to="/auth/sign-in"
+            search={{
+              redirect,
+            }}
+            className="underline"
+          >
             {t("Sign in")}
           </Link>
         </div>

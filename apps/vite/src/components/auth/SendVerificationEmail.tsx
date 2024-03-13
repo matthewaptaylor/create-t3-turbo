@@ -12,13 +12,7 @@ import { Button } from "~/components/ui/button";
 import { useSendVerificationEmailMutation } from "~/lib/mutations";
 import { Alert, AlertDescription, AlertTitle } from "../ui/alert";
 
-export interface SendVerificationEmailProps {
-  redirect?: string;
-}
-
-export const SendVerificationEmail: FC<SendVerificationEmailProps> = ({
-  redirect,
-}) => {
+export const SendVerificationEmail: FC = () => {
   const { t } = useTranslation();
 
   const mutation = useSendVerificationEmailMutation();

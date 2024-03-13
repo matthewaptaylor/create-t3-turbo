@@ -17,16 +17,7 @@ import { Input, InputError } from "~/components/ui/input";
 import { Label } from "~/components/ui/label";
 import { useEmailPasswordSendResetEmailMutation } from "~/lib/mutations";
 
-export interface EmailPasswordForgotPasswordProps {
-  /**
-   * The URL to redirect to once the password is reset.
-   */
-  redirect?: string;
-}
-
-export const EmailPasswordForgotPassword: FC<
-  EmailPasswordForgotPasswordProps
-> = ({ redirect }) => {
+export const EmailPasswordForgotPassword: FC = () => {
   const { t } = useTranslation();
 
   const mutation = useEmailPasswordSendResetEmailMutation();
