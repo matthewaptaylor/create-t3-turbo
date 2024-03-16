@@ -165,34 +165,42 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
 
             // Override the email password sign up function
             emailPasswordSignUp: async function (input) {
-              const response =
-                await originalImplementation.emailPasswordSignUp(input);
+              let response: Awaited<
+                ReturnType<typeof originalImplementation.emailPasswordSignUp>
+              >;
 
-              if (
-                response.status === "OK" &&
-                response.user.loginMethods.length === 1
-              ) {
-                // Sign up completed, record the user
-                const acceptLanguage = supertokens
-                  .getRequestFromUserContext(input.userContext)
-                  ?.getHeaderValue("accept-language");
+              // Run the sign in/up in a transaction so it fails if the
+              // database cannot be written to
+              await prisma.$transaction(async (tx) => {
+                response =
+                  await originalImplementation.emailPasswordSignUp(input);
 
-                await prisma.user.create({
-                  data: {
-                    id: response.user.id,
-                    language:
-                      acceptLanguage === undefined
-                        ? null
-                        : findSupportedLanguage(acceptLanguage),
-                  },
-                });
+                if (
+                  response.status === "OK" &&
+                  response.user.loginMethods.length === 1
+                ) {
+                  // Sign up completed, record the user
+                  const acceptLanguage = supertokens
+                    .getRequestFromUserContext(input.userContext)
+                    ?.getHeaderValue("accept-language");
 
-                // Record as a sign up for the session
-                if (isRecord(input.userContext))
-                  input.userContext.isSignUp = true;
-              }
+                  await tx.user.create({
+                    data: {
+                      id: response.user.id,
+                      language:
+                        acceptLanguage === undefined
+                          ? null
+                          : findSupportedLanguage(acceptLanguage),
+                    },
+                  });
 
-              return response;
+                  // Record as a sign up for the session
+                  if (isRecord(input.userContext))
+                    input.userContext.isSignUp = true;
+                }
+              });
+
+              return response!;
             },
 
             // Override the email password sign in function
@@ -209,40 +217,48 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
 
             // Override the third party sign in/up function
             thirdPartySignInUp: async function (input) {
-              const response =
-                await originalImplementation.thirdPartySignInUp(input);
+              let response: Awaited<
+                ReturnType<typeof originalImplementation.thirdPartySignInUp>
+              >;
 
-              if (response.status === "OK") {
-                // Sign in/up completed
-                if (
-                  response.createdNewRecipeUser &&
-                  response.user.loginMethods.length === 1
-                ) {
-                  // New user signed up, record the user
-                  const acceptLanguage = supertokens
-                    .getRequestFromUserContext(input.userContext)
-                    ?.getHeaderValue("accept-language");
+              // Run the sign in/up in a transaction so it fails if the
+              // database cannot be written to
+              await prisma.$transaction(async (tx) => {
+                response =
+                  await originalImplementation.thirdPartySignInUp(input);
 
-                  if (acceptLanguage !== undefined)
-                    await prisma.user.create({
-                      data: {
-                        id: response.user.id,
-                        language:
-                          acceptLanguage === undefined
-                            ? null
-                            : findSupportedLanguage(acceptLanguage),
-                      },
-                    });
+                if (response.status === "OK") {
+                  // Sign in/up completed
+                  if (
+                    response.createdNewRecipeUser &&
+                    response.user.loginMethods.length === 1
+                  ) {
+                    // New user signed up, record the user
+                    const acceptLanguage = supertokens
+                      .getRequestFromUserContext(input.userContext)
+                      ?.getHeaderValue("accept-language");
 
-                  // Record as a sign up for the session
-                  if (isRecord(input.userContext))
-                    input.userContext.isSignUp = true;
-                } else {
-                  // Existing user signed in
+                    if (acceptLanguage !== undefined)
+                      await tx.user.create({
+                        data: {
+                          id: response.user.id,
+                          language:
+                            acceptLanguage === undefined
+                              ? null
+                              : findSupportedLanguage(acceptLanguage),
+                        },
+                      });
+
+                    // Record as a sign up for the session
+                    if (isRecord(input.userContext))
+                      input.userContext.isSignUp = true;
+                  } else {
+                    // Existing user signed in
+                  }
                 }
-              }
+              });
 
-              return response;
+              return response!;
             },
           }),
         },
