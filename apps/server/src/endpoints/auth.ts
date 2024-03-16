@@ -14,8 +14,9 @@ import ThirdPartyEmailPassword from "supertokens-node/recipe/thirdpartyemailpass
 import { basicEmailTemplate, sendEmail } from "@acme/mailer";
 import { validatePassword } from "@acme/validators";
 
+import { prisma } from "../db";
 import { env } from "../env";
-import { isRecord } from "../utils";
+import { findSupportedLanguage, isRecord } from "../utils";
 
 export const AUTH_ENDPOINT = "/auth"; // Same as apps/vite/src/lib/auth.ts
 
@@ -34,6 +35,7 @@ export const setupFastifyAuthErrorHandler = (server: FastifyInstance) => {
 
 /**
  * Setup the Fastify server with SuperTokens Auth.
+ * You must initialize Prisma before calling this function.
  * @param server The Fastify server instance.
  */
 export const setupFastifyAuth = async (server: FastifyInstance) => {
@@ -170,7 +172,20 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
                 response.status === "OK" &&
                 response.user.loginMethods.length === 1
               ) {
-                // Sign up completed
+                // Sign up completed, record the user
+                const acceptLanguage = supertokens
+                  .getRequestFromUserContext(input.userContext)
+                  ?.getHeaderValue("accept-language");
+
+                await prisma.user.create({
+                  data: {
+                    id: response.user.id,
+                    language:
+                      acceptLanguage === undefined
+                        ? null
+                        : findSupportedLanguage(acceptLanguage),
+                  },
+                });
 
                 // Record as a sign up for the session
                 if (isRecord(input.userContext))
@@ -199,19 +214,25 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
 
               if (response.status === "OK") {
                 // Sign in/up completed
-
-                // const firstName =
-                //   response.rawUserInfoFromProvider.fromUserInfoAPI!
-                //     .first_name;
-
-                console.log(input.userContext);
-                console.log(response);
-
                 if (
                   response.createdNewRecipeUser &&
                   response.user.loginMethods.length === 1
                 ) {
-                  // New user signed up
+                  // New user signed up, record the user
+                  const acceptLanguage = supertokens
+                    .getRequestFromUserContext(input.userContext)
+                    ?.getHeaderValue("accept-language");
+
+                  if (acceptLanguage !== undefined)
+                    await prisma.user.create({
+                      data: {
+                        id: response.user.id,
+                        language:
+                          acceptLanguage === undefined
+                            ? null
+                            : findSupportedLanguage(acceptLanguage),
+                      },
+                    });
 
                   // Record as a sign up for the session
                   if (isRecord(input.userContext))

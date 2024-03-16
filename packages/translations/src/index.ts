@@ -10,18 +10,19 @@ import { email, EMAIL_NS } from "./email";
 export * from "react-i18next";
 
 export type I18n = typeof i18n;
-export type { ParseKeys, TFunction } from "i18next";
+export type { ParseKeys } from "i18next";
 
-export { CLIENT_NS, EMAIL_NS };
+export type SupportedLanguage = keyof Client;
+export const SUPPORTED_LANGUAGES = Object.keys(client) as SupportedLanguage[];
 
-export const DEFAULT_LANG = "en"; // The language all types are based on
+const DEFAULT_LANG = "en"; // The language all types are based on
 
 declare module "i18next" {
   interface CustomTypeOptions {
     defaultNS: typeof CLIENT_NS;
     resources: {
-      [CLIENT_NS]: Client[keyof Client];
-      [EMAIL_NS]: Email[keyof Email];
+      [CLIENT_NS]: Client[SupportedLanguage];
+      [EMAIL_NS]: Email[SupportedLanguage];
     };
   }
 }
@@ -31,7 +32,7 @@ declare module "i18next" {
  */
 export const setupI18n = async () => {
   const resources: Resource = {};
-  let lang: keyof Client;
+  let lang: SupportedLanguage;
   for (lang in client) {
     resources[lang] = {
       [CLIENT_NS]: client[lang],

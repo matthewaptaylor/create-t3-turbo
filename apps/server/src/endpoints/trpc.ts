@@ -3,7 +3,6 @@ import type {
   FastifyTRPCPluginOptions,
 } from "@trpc/server/adapters/fastify";
 import type { FastifyInstance } from "fastify";
-import { PrismaClient } from "@prisma/client";
 import { TRPCError } from "@trpc/server";
 import { fastifyTRPCPlugin } from "@trpc/server/adapters/fastify";
 import supertokens, { Error as SuperTokensError } from "supertokens-node";
@@ -13,9 +12,9 @@ import SuperTokensSession from "supertokens-node/recipe/session";
 import type { AppRouter, Session, TRPCContext } from "@acme/api";
 import { appRouter, SessionErrorEnum } from "@acme/api";
 
-export const TRPC_ENDPOINT = "/trpc";
+import { prisma } from "../db";
 
-export const prisma = new PrismaClient();
+export const TRPC_ENDPOINT = "/trpc";
 
 /**
  * This helper generates the "internals" for a tRPC context. The API handler
@@ -87,28 +86,11 @@ const createTRPCContext = async ({
 };
 
 /**
- * Initialize the database. This must be called before registering the API on
- * a server.
- */
-const initDb = async () => {
-  try {
-    // ... you will write your Prisma Client queries here
-    await prisma.$connect();
-  } catch (e) {
-    console.error(e);
-    await prisma.$disconnect();
-    throw e;
-  }
-  await prisma.$disconnect();
-};
-
-/**
  * Setup the Fastify server with tRPC.
+ * You must initialize Prisma before calling this function.
  * @param server
  */
 export const setupFastifyTrpc = async (server: FastifyInstance) => {
-  await initDb();
-
   await server.register(fastifyTRPCPlugin, {
     prefix: TRPC_ENDPOINT,
     trpcOptions: {
