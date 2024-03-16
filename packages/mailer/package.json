@@ -15,8 +15,9 @@
   "devDependencies": {
     "@acme/eslint-config": "workspace:^0.2.0",
     "@acme/prettier-config": "workspace:^0.1.0",
+    "@acme/translations": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
-    "@types/mustache": "^4.2.5",
+    "@types/mjml": "^4.7.4",
     "eslint": "^8.56.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
@@ -28,7 +29,8 @@
   },
   "prettier": "@acme/prettier-config",
   "dependencies": {
-    "mustache": "^4.2.0",
+    "handlebars": "^4.7.8",
+    "mjml": "^4.15.3",
     "node-mailjet": "^6.0.5"
   }
 }

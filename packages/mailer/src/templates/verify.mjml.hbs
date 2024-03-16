@@ -1,0 +1,34 @@
+<mjml>
+  <mj-body background-color="#eeeeee">
+    <mj-section full-width="full-width">
+      <mj-column>
+        <mj-text align="left">{{t.companyName}}</mj-text>
+      </mj-column>
+    </mj-section>
+
+    <mj-section background-color="#ffffff" full-width="full-width">
+      <mj-column>
+        <mj-text font-size="20px">{{t.verifyEmailSubject}}</mj-text>
+
+        <mj-text font-size="16px">{{t.verifyEmailMessage}}</mj-text>
+
+        <mj-button
+          href="{{link}}"
+          font-family="Helvetica"
+          background-color="#f45e43"
+          color="white"
+        >
+          {{t.verifyEmailButton}}
+        </mj-button>
+      </mj-column>
+    </mj-section>
+
+    <mj-section full-width="full-width">
+      <mj-column>
+        <mj-text align="center">
+          <p>{{t.address}}</p>
+        </mj-text>
+      </mj-column>
+    </mj-section>
+  </mj-body>
+</mjml>

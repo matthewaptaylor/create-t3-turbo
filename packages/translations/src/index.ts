@@ -2,19 +2,26 @@ import type { Resource } from "i18next";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-import type { en } from "./locales/en";
-import { locales } from "./locales";
+import type { Client } from "./client";
+import type { Email } from "./email";
+import { client, CLIENT_NS } from "./client";
+import { email, EMAIL_NS } from "./email";
 
 export * from "react-i18next";
 
+export type I18n = typeof i18n;
+export type { ParseKeys, TFunction } from "i18next";
+
+export { CLIENT_NS, EMAIL_NS };
+
 export const DEFAULT_LANG = "en"; // The language all types are based on
-export const DEFAULT_NS = "translation";
 
 declare module "i18next" {
   interface CustomTypeOptions {
-    defaultNS: typeof DEFAULT_NS;
+    defaultNS: typeof CLIENT_NS;
     resources: {
-      [DEFAULT_NS]: typeof en;
+      [CLIENT_NS]: Client[keyof Client];
+      [EMAIL_NS]: Email[keyof Email];
     };
   }
 }
@@ -24,13 +31,17 @@ declare module "i18next" {
  */
 export const setupI18n = async () => {
   const resources: Resource = {};
-  let lang: keyof typeof locales;
-  for (lang in locales) {
-    resources[lang] = { [DEFAULT_NS]: locales[lang] };
+  let lang: keyof Client;
+  for (lang in client) {
+    resources[lang] = {
+      [CLIENT_NS]: client[lang],
+      [EMAIL_NS]: email[lang],
+    };
   }
 
   await i18n.use(initReactI18next).init({
     resources,
+    defaultNS: CLIENT_NS,
     lng: DEFAULT_LANG,
     fallbackLng: DEFAULT_LANG,
     interpolation: {

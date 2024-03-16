@@ -2,6 +2,7 @@ import cors from "@fastify/cors";
 import fastify from "fastify";
 
 import { initMailer } from "@acme/mailer";
+import { i18n, setupI18n } from "@acme/translations";
 
 import {
   getAuthCorsHeaders,
@@ -23,7 +24,8 @@ const bootstrap = async () => {
   setupFastifyAuthErrorHandler(server);
 
   // Register plugins and middlewares
-  initMailer(env.MAILJET_API_KEY, env.MAILJET_API_SECRET);
+  await setupI18n();
+  initMailer(env.MAILJET_API_KEY, env.MAILJET_API_SECRET, i18n);
   await setupFastifyAuth(server);
   await setupFastifyTrpc(server);
   await server.register(cors, {

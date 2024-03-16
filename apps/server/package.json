@@ -12,6 +12,7 @@
   "dependencies": {
     "@acme/api": "workspace:^0.1.0",
     "@acme/mailer": "workspace:^",
+    "@acme/translations": "workspace:^0.1.0",
     "@acme/validators": "workspace:^0.1.0",
     "@dotenvx/dotenvx": "^0.24.0",
     "@fastify/cors": "^9.0.1",

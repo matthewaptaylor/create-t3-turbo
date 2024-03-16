@@ -119,21 +119,11 @@ export const setupFastifyAuth = async (server: FastifyInstance) => {
                     ],
                     subject: "Verify your email",
                     payload: {
-                      title: "Verify your email",
-                      preview:
-                        "Please verify your email address using this link.",
-                      greeting: "Hello!",
-                      beforeButton:
-                        "Please verify your email address using the button below.",
-                      buttonText: "Verify email",
-                      buttonLink: input.emailVerifyLink,
-                      afterButton:
-                        "If you did not sign up for an account, you can ignore this email.",
-                      goodbye: "Thanks!",
-                      address: "Acme Inc.",
+                      link: input.emailVerifyLink,
                     },
                   },
                   basicEmailTemplate,
+                  "en",
                 );
               },
             };
