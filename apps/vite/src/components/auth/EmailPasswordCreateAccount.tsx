@@ -10,7 +10,7 @@ import { zodValidator } from "@tanstack/zod-form-adapter";
 import { doesEmailExist } from "supertokens-web-js/recipe/thirdpartyemailpassword";
 import { z } from "zod";
 
-import { useTranslation } from "@acme/translations";
+import { useTranslation } from "@acme/client-translations";
 import { validatePassword } from "@acme/validators";
 
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";

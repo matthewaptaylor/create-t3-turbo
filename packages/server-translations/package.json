@@ -1,5 +1,5 @@
 {
-  "name": "@acme/translations",
+  "name": "@acme/server-translations",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -27,7 +27,6 @@
   },
   "prettier": "@acme/prettier-config",
   "dependencies": {
-    "i18next": "^23.10.0",
-    "react-i18next": "^14.0.5"
+    "i18next": "^23.10.1"
   }
 }

@@ -1,6 +1,6 @@
 import { Client } from "node-mailjet";
 
-import type { I18n } from "@acme/translations";
+import type { I18n } from "@acme/server-translations";
 
 export let mailjet: Client;
 export let i18n: I18n;

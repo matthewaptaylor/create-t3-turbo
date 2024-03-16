@@ -7,7 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 
-import { useTranslation } from "@acme/translations";
+import { useTranslation } from "@acme/client-translations";
 
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { useTitle } from "~/lib/hooks";

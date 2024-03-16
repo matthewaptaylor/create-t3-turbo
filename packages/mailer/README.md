@@ -7,8 +7,8 @@ This package handles sending templated emails.
 1. First you must initialise the mailer before calling using it.
 
 ```ts
+import { i18n, setupI18n } from "@acme/client-translations";
 import { initMailer } from "@acme/mailer";
-import { i18n, setupI18n } from "@acme/translations";
 
 await setupI18n();
 initMailer(env.MAILJET_API_KEY, env.MAILJET_API_SECRET, i18n);
@@ -50,7 +50,7 @@ export const verifyEmailTemplate: EmailTemplate<VerifyEmailPayload> = {
 };
 ```
 
-By adding the `companyName` key, the translation `companyName` from the email namespace in `@acme/translations` can be accessed in the template using
+By adding the `companyName` key, the translation `companyName` from the email namespace in `@acme/client-translations` can be accessed in the template using
 
 ```hbs
 The company name is {{t.companyName}}.

@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { useTranslation } from "@acme/translations";
+import { useTranslation } from "@acme/client-translations";
 
 import { ThirdPartyCallback } from "~/components/auth/ThirdPartyCallback";
 import { useTitle } from "~/lib/hooks";
@@ -19,6 +19,8 @@ const CallbackGoogle: FC = () => {
   );
 };
 
-export const Route = createFileRoute("/_auth-layout/auth/callback/$providerId")({
-  component: CallbackGoogle,
-});
+export const Route = createFileRoute("/_auth-layout/auth/callback/$providerId")(
+  {
+    component: CallbackGoogle,
+  },
+);

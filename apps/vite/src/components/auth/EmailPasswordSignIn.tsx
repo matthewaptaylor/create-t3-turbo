@@ -9,7 +9,7 @@ import { Link, useNavigate } from "@tanstack/react-router";
 import { zodValidator } from "@tanstack/zod-form-adapter";
 import { z } from "zod";
 
-import { useTranslation } from "@acme/translations";
+import { useTranslation } from "@acme/client-translations";
 
 import { Alert, AlertDescription, AlertTitle } from "~/components/ui/alert";
 import { Button } from "~/components/ui/button";

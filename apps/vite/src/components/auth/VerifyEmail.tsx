@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link } from "@tanstack/react-router";
 import Session from "supertokens-web-js/recipe/session";
 
-import { useTranslation } from "@acme/translations";
+import { useTranslation } from "@acme/client-translations";
 
 import { Button } from "~/components/ui/button";
 import { useVerifyEmailMutation } from "~/lib/mutations";

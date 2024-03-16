@@ -1,4 +1,4 @@
-# @acme/translations
+# @acme/client-translations
 
 Translations for use across front-ends. This re-exports an initialised instance of the `react-i18next` library, and provides a hook for use in components.
 
@@ -7,7 +7,7 @@ Translations for use across front-ends. This re-exports an initialised instance 
 Set up the translations in your application's entry point:
 
 ```tsx
-import { setupI18n } from "@acme/translations";
+import { setupI18n } from "@acme/client-translations";
 
 setupI18n().catch(console.error);
 ```
@@ -17,7 +17,7 @@ Then use the `useTranslation` hook in your components:
 ```tsx
 import { FC } from "react";
 
-import { useTranslation } from "@acme/translations";
+import { useTranslation } from "@acme/client-translations";
 
 const MyComponent: FC = () => {
   const { t } = useTranslation();

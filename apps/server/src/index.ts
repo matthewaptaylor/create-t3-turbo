@@ -2,7 +2,7 @@ import cors from "@fastify/cors";
 import fastify from "fastify";
 
 import { initMailer } from "@acme/mailer";
-import { i18n, setupI18n } from "@acme/translations";
+import { i18n, setupI18n } from "@acme/server-translations";
 
 import { initDb } from "./db";
 import {

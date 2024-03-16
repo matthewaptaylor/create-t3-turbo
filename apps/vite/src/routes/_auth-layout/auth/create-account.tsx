@@ -2,7 +2,7 @@ import type { FC } from "react";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { useTranslation } from "@acme/translations";
+import { useTranslation } from "@acme/client-translations";
 
 import { EmailPasswordCreateAccount } from "~/components/auth/EmailPasswordCreateAccount";
 import { useTitle } from "~/lib/hooks";

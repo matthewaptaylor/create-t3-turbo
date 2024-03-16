@@ -8,7 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Link, useNavigate } from "@tanstack/react-router";
 import { getStateAndOtherInfoFromStorage } from "supertokens-web-js/recipe/thirdpartyemailpassword";
 
-import { useTranslation } from "@acme/translations";
+import { useTranslation } from "@acme/client-translations";
 
 import { useThirdPartySignInUpQuery } from "~/lib/queries";
 import { router } from "~/lib/router";

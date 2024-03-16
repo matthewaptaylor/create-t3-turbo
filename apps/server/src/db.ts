@@ -8,7 +8,6 @@ export const prisma = new PrismaClient();
  */
 export const initDb = async () => {
   try {
-    // ... you will write your Prisma Client queries here
     await prisma.$connect();
   } catch (e) {
     console.error(e);

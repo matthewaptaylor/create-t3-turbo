@@ -3,7 +3,7 @@ import path from "path";
 import Handlebars from "handlebars";
 import mjml2html from "mjml";
 
-import type { ParseKeys } from "@acme/translations";
+import type { ParseKeys } from "@acme/client-translations";
 
 import { i18n } from "../globals";
 

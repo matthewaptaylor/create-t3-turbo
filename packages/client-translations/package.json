@@ -1,5 +1,5 @@
 {
-  "name": "@acme/mailer",
+  "name": "@acme/client-translations",
   "private": true,
   "version": "0.1.0",
   "type": "module",
@@ -15,9 +15,7 @@
   "devDependencies": {
     "@acme/eslint-config": "workspace:^0.2.0",
     "@acme/prettier-config": "workspace:^0.1.0",
-    "@acme/server-translations": "workspace:^0.1.0",
     "@acme/tsconfig": "workspace:^0.1.0",
-    "@types/mjml": "^4.7.4",
     "eslint": "^8.56.0",
     "prettier": "^3.2.5",
     "typescript": "^5.3.3"
@@ -29,8 +27,7 @@
   },
   "prettier": "@acme/prettier-config",
   "dependencies": {
-    "handlebars": "^4.7.8",
-    "mjml": "^4.15.3",
-    "node-mailjet": "^6.0.5"
+    "i18next": "^23.10.0",
+    "react-i18next": "^14.0.5"
   }
 }

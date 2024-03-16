@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "@acme/api": "workspace:^0.1.0",
-    "@acme/translations": "workspace:^0.1.0",
+    "@acme/client-translations": "workspace:^0.1.0",
     "@acme/validators": "workspace:^0.1.0",
     "@dotenvx/dotenvx": "^0.24.0",
     "@fontsource-variable/noto-sans": "^5.0.1",

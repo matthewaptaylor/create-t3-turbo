@@ -3,7 +3,7 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
 
-import { useTranslation } from "@acme/translations";
+import { useTranslation } from "@acme/client-translations";
 
 import { EmailPasswordSignIn } from "~/components/auth/EmailPasswordSignIn";
 import { ThirdPartySignIn } from "~/components/auth/ThirdPartySignIn";

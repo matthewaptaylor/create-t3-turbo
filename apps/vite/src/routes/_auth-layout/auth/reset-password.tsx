@@ -1,7 +1,7 @@
 import type { FC } from "react";
 import { createFileRoute } from "@tanstack/react-router";
 
-import { useTranslation } from "@acme/translations";
+import { useTranslation } from "@acme/client-translations";
 
 import { EmailPasswordResetPassword } from "~/components/auth/EmailPasswordResetPassword";
 import { useTitle } from "~/lib/hooks";

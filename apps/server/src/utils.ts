@@ -1,6 +1,6 @@
 import parser from "accept-language-parser";
 
-import { SUPPORTED_LANGUAGES } from "@acme/translations";
+import { SUPPORTED_LANGUAGES } from "@acme/client-translations";
 
 /**
  * Check if a value is a record.

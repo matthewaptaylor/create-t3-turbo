@@ -1,7 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 
-import { setupI18n } from "@acme/translations";
+import { setupI18n } from "@acme/client-translations";
 
 import "@fontsource-variable/noto-sans";
 import "~/assets/styles.css";
